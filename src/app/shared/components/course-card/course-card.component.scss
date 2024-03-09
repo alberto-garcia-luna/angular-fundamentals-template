@@ -30,5 +30,17 @@
     &-text {
       margin-top: 16px;
     }
+    &-actions {
+      display: flex;
+    }
+  }
+
+  &__buttons {
+    flex: 2;
+    display: flex;
+
+    &-title {
+      font-weight: bold;
+    }
   }
 }

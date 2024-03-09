@@ -10,9 +10,18 @@
     color: #fff;
     text-transform: uppercase;
     cursor: pointer;
+    margin-right: 5px;
 
     &:hover {
         background: #016486;
+    }
+
+    &:focus {
+        background: #007298;
+    }
+
+    &:active {
+        background: #007298;
     }
 
     &__single-icon {

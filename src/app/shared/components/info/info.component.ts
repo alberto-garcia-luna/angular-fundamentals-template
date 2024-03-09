@@ -1,9 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.scss']
 })
-export class InfoComponent {}
-// Use the names `title` and `text`.
+export class InfoComponent {
+  // Use the names `title` and `text`.
+  @Input() title: string = '';
+
+  @Input() text: string = '';
+
+  @Output() addCourse = new EventEmitter();
+
+  addButtonClick() {
+    this.addCourse.emit();
+  }
+}

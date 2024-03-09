@@ -1,4 +1,8 @@
 <div class="app-button">
+<!--<div class="app-button" (click)="buttonClick()">-->
   <!-- Replace the text below with your code -->
-  Button
+  <ng-container *ngIf="iconName !== ''">
+    <fa-icon [icon]="buttonIcon"></fa-icon>
+  </ng-container>
+  {{buttonText}}
 </div>
