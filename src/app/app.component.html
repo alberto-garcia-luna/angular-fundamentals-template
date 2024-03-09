@@ -1,6 +1,6 @@
 <app-header>
   <p username>{{testUser.username}}</p>
-  <app-button loginButton [buttonText]="headerButtonText" (click)="login($event)"></app-button>
+  <app-button loginButton [buttonText]="headerButtonText" (click)="loginClick($event)"></app-button>
 </app-header>
 <div class="app-root">
   <!-- Search component -->
@@ -8,16 +8,21 @@
 
   <!-- Info component -->
   <app-info [title]="infoTitle" [text]="infoText">
-    <app-button addButton [buttonText]="infoButtonText" (click)="addNewCourse($event)"></app-button>
+    <app-button addButton [buttonText]="infoButtonText" (click)="addNewCourseClick($event)"></app-button>
   </app-info>
   
   <!-- Course Card component -->
-  <app-course-card [editable]="testCourse.editable" [title]="testCourse.title" [description]="testCourse.description"
-    [authors]="testCourse.authors" [duration]="testCourse.duration" [creationDate]="testCourse.creationDate">
-    <app-button showButton [buttonText]="showCourseButtonText" (click)="showCourse($event)"></app-button>
-    <app-button deleteButton [iconName]="deleteButtonName" (click)="deleteCourse($event)"></app-button>
-    <app-button editButton [iconName]="editButtonName" (click)="editCourse($event)"></app-button>
+  <app-course-card [editable]="true" [title]="testCourse.title" [description]="testCourse.description"
+    [authors]="testCourse.authors" [duration]="testCourse.duration" [creationDate]="testCourse.creationDate"
+    (clickOnShow)="showCourseClick($event)">
+    <app-button deleteButton [iconName]="deleteButtonName" (click)="deleteCourseClick($event)"></app-button>
+    <app-button editButton [iconName]="editButtonName" (click)="editCourseClick($event)"></app-button>
   </app-course-card>
+
+  <!-- Course list component -->
+  <app-course-list [editable]="true" [courses]="testCourses"
+    (showCourse)="showCourseClick($event)" (deleteCourse)="deleteCourseClick($event)" 
+    (editCourse)="editCourseClick($event)"></app-course-list>
 
   <!-- Login Form component -->
   <!--<app-login-form></app-login-form>-->

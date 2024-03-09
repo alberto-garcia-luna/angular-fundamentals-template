@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { formatDate } from '@angular/common';
+import { mockedAuthorsList } from '@app/shared/mocks/mock';
 
 @Component({
   selector: 'app-course-card',
@@ -10,7 +11,7 @@ export class CourseCardComponent {
   @Input() editable: boolean = false;
   @Input() title: string = '';
   @Input() description: string = '';
-  @Input() creationDate: Date = new Date();
+  @Input() creationDate: string = '';
   @Input() duration: number = 0;
   @Input() authors: string[] = [];
 
@@ -19,10 +20,11 @@ export class CourseCardComponent {
   iconName: string = 'trash';
   creationDateFormatted: string = '';
   durationFormatted: string = ''
+  showCourseButtonText: string = "Show Course";
 
   ngOnInit() {
     this.creationDateFormatted = 
-      this.getFormattedDate(this.creationDate, 'dd.MM.yyyy');
+      this.getFormattedDate(new Date(this.creationDate), 'dd.MM.yyyy');
 
     this.durationFormatted = this.getFormattedHours(this.duration);
   }
@@ -44,5 +46,13 @@ export class CourseCardComponent {
     const minutes: number = totalMinutes % 60;
 
     return hours + ":" + minutes.toLocaleString('en-US', {minimumIntegerDigits: 2}) + " hours";
+  }
+
+  getAuthorsName(authorId: string): string {
+    let author = mockedAuthorsList.find((author) =>
+      author.id === authorId
+    );
+
+    return author ? author.name : 'Not found';
   }
 }

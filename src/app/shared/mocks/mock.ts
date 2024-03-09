@@ -41,3 +41,8 @@ export const mockedAuthorsList = [
         name: 'Valentina Larina'
     },
 ]
+
+export const mockedUser = {
+    username: 'Harry Potter',
+    hasSession: true
+}

@@ -8,15 +8,15 @@
         <div class="course-card__info-text">
             <div>
               <b>Authors: </b>
-              <span *ngFor="let author of authors">
-                {{author}},
+              <span *ngFor="let author of authors; let isLast = last">
+                {{getAuthorsName(author)}}{{isLast ? '' : ', '}}
               </span>
             </div>
             <div><b>Duration: </b><span class="course-card__duration">{{durationFormatted}}</span></div>
             <div><b>Created: </b><span class="course-card__date">{{creationDateFormatted}}</span></div>
         </div>
         <div class="course-card__info-actions">
-            <ng-content select="[showButton]" (click)="showCourseButtonClick()"></ng-content>
+            <app-button [buttonText]="showCourseButtonText" (click)="showCourseButtonClick()"></app-button>
             <div *ngIf="editable" class="course-card__buttons">
                 <!--Enter your code here-->
                 <ng-content select="[deleteButton]"></ng-content>
