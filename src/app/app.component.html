@@ -10,19 +10,23 @@
   <app-info [title]="infoTitle" [text]="infoText">
     <app-button addButton [buttonText]="infoButtonText" (click)="addNewCourseClick($event)"></app-button>
   </app-info>
-  
+
   <!-- Course Card component -->
-  <app-course-card [editable]="true" [title]="testCourse.title" [description]="testCourse.description"
-    [authors]="testCourse.authors" [duration]="testCourse.duration" [creationDate]="testCourse.creationDate"
-    (clickOnShow)="showCourseClick($event)">
-    <app-button deleteButton [iconName]="deleteButtonName" (click)="deleteCourseClick($event)"></app-button>
-    <app-button editButton [iconName]="editButtonName" (click)="editCourseClick($event)"></app-button>
+  <app-course-card [editable]="true" [course]="testCourse" (clickOnShow)="showCourseClick($event)">
+    <app-button deleteButton [iconName]="deleteButtonIconName" (click)="deleteCourseClick($event)"></app-button>
+    <app-button editButton [iconName]="editButtonIconName" (click)="editCourseClick($event)"></app-button>
   </app-course-card>
 
   <!-- Course list component -->
   <app-course-list [editable]="true" [courses]="testCourses"
     (showCourse)="showCourseClick($event)" (deleteCourse)="deleteCourseClick($event)" 
-    (editCourse)="editCourseClick($event)"></app-course-list>
+    (editCourse)="editCourseClick($event)">
+  </app-course-list>
+
+  <!-- Course info component -->
+  <app-course-info [course]="testCourse">
+    <app-button backButton [buttonText]="backButtonText" (click)="backCourseClick($event)"></app-button>
+  </app-course-info>
 
   <!-- Login Form component -->
   <!--<app-login-form></app-login-form>-->

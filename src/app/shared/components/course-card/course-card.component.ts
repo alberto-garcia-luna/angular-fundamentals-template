@@ -1,6 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { mockedAuthorsList } from '@app/shared/mocks/mock';
+export class Course {
+  id: string = '';
+  title: string = '';
+  description: string = '';
+  creationDate: string = '';
+  duration: number = 0;
+  authors: string[] = [];
+}
 
 @Component({
   selector: 'app-course-card',
@@ -9,33 +17,27 @@ import { mockedAuthorsList } from '@app/shared/mocks/mock';
 })
 export class CourseCardComponent {
   @Input() editable: boolean = false;
-  @Input() title: string = '';
-  @Input() description: string = '';
-  @Input() creationDate: string = '';
-  @Input() duration: number = 0;
-  @Input() authors: string[] = [];
+  @Input() course: Course = {
+    id: '',
+    title: '',
+    description: '',
+    creationDate: '',
+    duration: 0,
+    authors: []
+  };
 
   @Output() clickOnShow = new EventEmitter();
 
   iconName: string = 'trash';
-  creationDateFormatted: string = '';
-  durationFormatted: string = ''
   showCourseButtonText: string = "Show Course";
-
-  ngOnInit() {
-    this.creationDateFormatted = 
-      this.getFormattedDate(new Date(this.creationDate), 'dd.MM.yyyy');
-
-    this.durationFormatted = this.getFormattedHours(this.duration);
-  }
 
   showCourseButtonClick() {
     this.clickOnShow.emit();
   }
 
-  getFormattedDate(date: Date, format?: string): string {
+  getFormattedDate(date: string, format?: string): string {
     if(!format){
-      format = 'yyyy/MM/dd'
+      format = 'dd.MM.yyyy'
     }
 
     return formatDate(date, format, 'en-US');
