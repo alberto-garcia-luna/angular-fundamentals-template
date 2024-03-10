@@ -3,7 +3,7 @@ export class Course {
   id: string = '';
   title: string = '';
   description: string = '';
-  creationDate: string = '';
+  creationDate: string | Date = '';
   duration: number = 0;
   authors: string[] = [];
 }

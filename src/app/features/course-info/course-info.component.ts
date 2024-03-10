@@ -5,7 +5,7 @@ export class Course {
   id: string = '';
   title: string = '';
   description: string = '';
-  creationDate: string = '';
+  creationDate: string | Date = '';
   duration: number = 0;
   authors: string[] = [];
 }
@@ -28,7 +28,7 @@ export class CourseInfoComponent {
 
   backCourseButtonText: string = "Back";
 
-  getFormattedDate(date: string, format?: string): string {
+  getFormattedDate(date: string | Date, format?: string): string {
     if(!format){
       format = 'dd.MM.yyyy'
     }

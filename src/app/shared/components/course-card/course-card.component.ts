@@ -5,7 +5,7 @@ export class Course {
   id: string = '';
   title: string = '';
   description: string = '';
-  creationDate: string = '';
+  creationDate: string | Date = '';
   duration: number = 0;
   authors: string[] = [];
 }
@@ -35,7 +35,7 @@ export class CourseCardComponent {
     this.clickOnShow.emit();
   }
 
-  getFormattedDate(date: string, format?: string): string {
+  getFormattedDate(date: string | Date, format?: string): string {
     if(!format){
       format = 'dd.MM.yyyy'
     }
