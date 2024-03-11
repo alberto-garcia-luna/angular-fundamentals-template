@@ -28,5 +28,5 @@
 </div>
 <div class="navigation-block">
   <!--Enter your code here-->
-  <ng-content select="[backButton]"></ng-content>
+  <app-button [buttonText]="backCourseButtonText" (click)="backCourseClick()"></app-button>
 </div>

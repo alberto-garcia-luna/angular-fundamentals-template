@@ -29,8 +29,7 @@
             <app-button [buttonText]="showCourseButtonText" (click)="showCourseButtonClick()"></app-button>
             <div *ngIf="editable" class="course-card__buttons">
                 <!--Enter your code here-->
-                <ng-content select="[deleteButton]"></ng-content>
-                <ng-content select="[editButton]"></ng-content>
+                <ng-content></ng-content>
             </div>
         </div>
     </div>

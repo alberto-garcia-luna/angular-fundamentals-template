@@ -15,7 +15,6 @@ export class AppComponent {
   emptyCourseListText: string = 'Please use \'Add New Course\' button to add your first course';
   addNewCourseButtonText: string = "Add New Course";
   showCourseButtonText: string = "Show Course";
-  backButtonText: string = 'Back';
   defaultUsername: string = 'Harry Potter';
   editButtonIconName: string = 'edit';
   deleteButtonIconName: string = 'delete';
@@ -62,9 +61,5 @@ export class AppComponent {
 
   deleteCourseClick(event?: MouseEvent) {
     console.log('Delete Course button event');
-  }
-
-  backCourseClick(event?: MouseEvent) {
-    console.log('Back Course button event');
   }
 }

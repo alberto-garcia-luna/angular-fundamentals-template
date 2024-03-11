@@ -50,4 +50,8 @@ export class CourseInfoComponent {
 
     return author ? author.name : 'Not found';
   }
+
+  backCourseClick(event?: MouseEvent) {
+    console.log('Back Course button event');
+  }
 }

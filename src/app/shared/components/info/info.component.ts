@@ -8,12 +8,5 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class InfoComponent {
   // Use the names `title` and `text`.
   @Input() title: string = '';
-
   @Input() text: string = '';
-
-  @Output() addCourse = new EventEmitter();
-
-  addButtonClick() {
-    this.addCourse.emit();
-  }
 }
