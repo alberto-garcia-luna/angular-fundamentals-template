@@ -1,6 +1,10 @@
 <app-header>
-  <p username>{{testUser.username}}</p>
-  <app-button loginButton [buttonText]="headerButtonText" (click)="loginClick($event)"></app-button>
+  <div class="app-header-right-panel">
+    <div class="app-header-right-panel-username">
+      <p>{{testUser.username}}</p>
+    </div>
+    <app-button [buttonText]="headerButtonText" (click)="loginClick($event)"></app-button>
+  </div>
 </app-header>
 <div class="app-root">
   <!-- Search component -->

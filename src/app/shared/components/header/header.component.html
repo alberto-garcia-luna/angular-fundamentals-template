@@ -1,10 +1,5 @@
 <div class="app-header">
   <img alt="logo" src="assets/logo.svg">
   <!-- Enter your code here -->
-  <div class="app-header-right-panel">
-    <div class="app-header-right-panel-username">
-      <ng-content select="[username]"></ng-content>
-    </div>
-    <ng-content select="[loginButton]" (click)="loginButtonClick()"></ng-content>
-  </div>
+  <ng-content></ng-content>
 </div>
