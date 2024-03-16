@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { EmailValidatorDirective, emailValidatorFunction } from '@app/shared/directives/email.directive';
+import { EmailValidatorDirective } from '@app/shared/directives/email.directive';
 
 @Component({
   selector: 'app-registration-form',
@@ -9,9 +9,9 @@ import { EmailValidatorDirective, emailValidatorFunction } from '@app/shared/dir
 })
 export class RegistrationFormComponent implements OnInit {
   registrationForm!: FormGroup;
-  registrationButtonText = 'Login'
-  emailValidator: EmailValidatorDirective = new EmailValidatorDirective();
-  submitted = false;
+  registrationButtonText: string = 'Login'
+  submitted: boolean = false;
+  
   // Use the names `name`, `email`, `password` for the form controls.  
   name: FormControl = new FormControl('', Validators.compose([
     Validators.required,
@@ -19,7 +19,7 @@ export class RegistrationFormComponent implements OnInit {
   ]));
   email: FormControl = new FormControl('', Validators.compose([
     Validators.required,
-    this.emailValidator.validate
+    new EmailValidatorDirective().validate
   ]));
   password: FormControl = new FormControl('', Validators.compose([
     Validators.required

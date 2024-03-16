@@ -26,7 +26,9 @@
     display: flex;
 
     &-item {
+      display: list-item;
       margin-right: 10px;
+      margin-left: 20px;
     }
   }
 
@@ -34,4 +36,8 @@
     margin-left: 4px;
     cursor: pointer;
   }
+}
+.form__action {
+  flex: 2;
+  display: flex;
 }

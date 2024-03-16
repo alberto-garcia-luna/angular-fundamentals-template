@@ -28,21 +28,6 @@ export class CourseInfoComponent {
 
   backCourseButtonText: string = "Back";
 
-  getFormattedDate(date: string | Date, format?: string): string {
-    if(!format){
-      format = 'dd.MM.yyyy'
-    }
-
-    return formatDate(date, format, 'en-US');
-  }
-
-  getFormattedHours(totalMinutes: number): string {
-    const hours: number = Math.floor(totalMinutes / 60);
-    const minutes: number = totalMinutes % 60;
-
-    return hours + ":" + minutes.toLocaleString('en-US', {minimumIntegerDigits: 2}) + " hours";
-  }
-
   getAuthorsName(authorId: string): string {
     let author = mockedAuthorsList.find((author) =>
       author.id === authorId

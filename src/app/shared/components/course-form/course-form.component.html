@@ -1,14 +1,19 @@
 <!-- Replace ::text:: with your code -->
 <h2>Create / Edit Course</h2>
-<form>
+<form [formGroup]="courseForm">
   <div class="app-plate">
     <div class="course">
       <h3>Main Info</h3>
       <div class="form__control">
         <label for="title">Title</label>
         <!--Use the name `title` for the form control.-->
-        <input type="text" id="title" placeholder="Input text"/>
-        <span id="titleErrorMessage" class="text-danger">Title is required.</span>
+        <input type="text" id="title" placeholder="Input text" formControlName="title" />
+        <ng-template [ngIf]="title.invalid && (title.touched || submitted)">
+          <span id="titleErrorMessage" class="text-danger">
+            <ng-template [ngIf]="title.errors?.['required']">Title is required.</ng-template>
+            <ng-template [ngIf]="title.errors?.['minlength']">Title minimum length is 2.</ng-template>
+          </span>
+        </ng-template>        
       </div>
       <div class="form__control">
         <label for="description">Description</label>
@@ -19,21 +24,42 @@
           placeholder="Input text"
           rows="4"
           cols="5"
+          formControlName="description"
         ></textarea>
-        <span id="descriptionErrorMessage" class="text-danger">Description is required.</span>
+        <ng-template [ngIf]="description.invalid && (description.touched || submitted)">
+          <span id="descriptionErrorMessage" class="text-danger">
+            <ng-template [ngIf]="description.errors?.['required']">Description is required.</ng-template>
+            <ng-template [ngIf]="description.errors?.['minlength']">Description minimum length is 2.</ng-template>
+          </span>
+        </ng-template>
       </div>
       <div class="separator"></div>
       <h3>Authors</h3>
       <div class="form__control">
         <div class="course__flex">
           <!--Use the name `author` for the form control.-->
-          <input type="text" id="author" placeholder="Input Author Name"/>
-          <app-button id="createAuthor"></app-button>
+          <input type="text" id="author" placeholder="Input Author Name" formControlName="author" />
+          <app-button id="createAuthor" [buttonText]="addAuthorButtonText" (click)="addAuthor(author.value)"></app-button>
         </div>
-        <span id="authorErrorMessage">New author should contain only latin letters and numbers.</span>
+        <ng-template [ngIf]="author.invalid && (author.touched || submitted)">
+          <span id="authorErrorMessage" class="text-danger">
+            <ng-template [ngIf]="author.errors?.['minlength']">Author minimum length is 2.</ng-template>
+            <ng-template [ngIf]="author.errors?.['pattern']">New author should contain only latin letters and numbers.</ng-template>
+          </span>
+        </ng-template>
         <div class="course__authors">
           <!--Use the name `authors` for the form array.-->
-          ::Authors::
+          <ng-container *ngFor="let authorName of authors.controls; let authorIndex = index">
+            <div class="course__authors-item">
+              <p>{{authorName.value}}</p>
+            </div>
+            <app-button [iconName]="deleteButtonIconName" (click)="deleteAuthor(authorIndex)"></app-button>
+          </ng-container>
+          <ng-template [ngIf]="authors.invalid && (authors.touched || submitted)">
+            <span id="authorsErrorMessage" class="text-danger">
+              <ng-template [ngIf]="authors.errors?.['required']">At least one Author is required.</ng-template>
+            </span>
+          </ng-template>
         </div>
       </div>
       <div class="separator"></div>
@@ -41,15 +67,21 @@
       <div class="form__control">
         <div class="course__flex">
           <!--Use the name `duration` for the form array.-->
-          <input type="number" id="duration" placeholder="Input duration"/>
+          <input type="number" id="duration" placeholder="Input duration" formControlName="duration" />
           <div class="course__duration">
             ::Duration::
           </div>
         </div>
-        <span id="durationErrorMessage" class="text-danger">Duration is required.</span>
+        <ng-template [ngIf]="duration.invalid && (duration.touched || submitted)">
+          <span id="durationErrorMessage" class="text-danger">
+            <ng-template [ngIf]="duration.errors?.['required']">Duration is required.</ng-template>
+            <ng-template [ngIf]="duration.errors?.['min']">Duration should be not less than 0.</ng-template>
+          </span>
+        </ng-template>
       </div>
       <div class="form__action">
-        <app-button></app-button>
+        <app-button [buttonText]="addCourseButtonText" (click)="onSubmit(courseForm.value)"></app-button>
+        <app-button [buttonText]="cancelButtonText" (click)="onCancel()"></app-button>
       </div>
     </div>
   </div>

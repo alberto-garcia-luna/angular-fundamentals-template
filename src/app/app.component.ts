@@ -62,4 +62,8 @@ export class AppComponent {
   deleteCourseClick(event?: MouseEvent) {
     console.log('Delete Course button event');
   }
+
+  searchClick(event?: MouseEvent) {
+    console.log('Search button event');
+  }
 }

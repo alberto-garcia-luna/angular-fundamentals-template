@@ -6,41 +6,34 @@
         <div class="form__control">
           <label for="name">Name</label>
           <!--Use the name `name` for the form control.-->
-          <input type="text" id="name" name="name" placeholder="Input text"
-            formControlName="name" />
-          <div *ngIf="name.invalid && (name.touched || submitted)">
-            <span *ngIf="name.errors?.['required']" id="nameErrorMessageRequired" class="text-danger">
-              Name is required.
+          <input type="text" id="name" name="name" placeholder="Input text" formControlName="name" />
+          <ng-template [ngIf]="name.invalid && (name.touched || submitted)">
+            <span id="nameErrorMessage" class="text-danger">
+              <ng-template [ngIf]="name.errors?.['required']">Name is required.</ng-template>
+              <ng-template [ngIf]="name.errors?.['minlength']">Name minimum length is 6.</ng-template>
             </span>
-            <span *ngIf="name.errors?.['minlength']" id="nameErrorMessageMinLength" class="text-danger">
-              Name minimum length is 6.
-            </span>
-          </div>
+          </ng-template>
         </div>
         <div class="form__control">
           <!--Use the name `email` for the form control.-->
           <label for="email">Email</label>
-          <input type="text" id="email" name="email" placeholder="Input text"
-            formControlName="email" />
-          <div *ngIf="email.invalid && (email.touched || submitted)">
-            <span *ngIf="email.errors?.['required']" id="emailErrorMessageRequired" class="text-danger">
-              Email is required.
+          <input type="text" id="email" name="email" placeholder="Input text" formControlName="email" />
+          <ng-template [ngIf]="email.invalid && (email.touched || submitted)">
+            <span id="emailErrorMessage" class="text-danger">
+              <ng-template [ngIf]="email.errors?.['required']">Email is required.</ng-template>
+              <ng-template [ngIf]="email.errors?.['emailValidator']">Email is not valid.</ng-template>
             </span>
-            <span *ngIf="email.errors?.['emailValidator']" id="emailErrorMessagePattern" class="text-danger">
-              Email pattern is not valid.
-            </span>
-          </div>
+          </ng-template>
         </div>
         <div class="form__control">
           <!--Use the name `password` for the form control.-->
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Input text"
-            formControlName="password" />
-          <div *ngIf="password.invalid && (password.touched || submitted)">
-            <span *ngIf="password.errors?.['required']" id="passwordErrorMessage" class="text-danger">
-              Password is required.
+          <input type="password" id="password" name="password" placeholder="Input text" formControlName="password" />
+          <ng-template [ngIf]="password.invalid && (password.touched || submitted)">
+            <span id="passwordErrorMessage" class="text-danger">
+              <ng-template [ngIf]="password.errors?.['required']">Password is required.</ng-template>
             </span>
-          </div>
+          </ng-template>
         </div>
       </div>
       <div class="form__action">

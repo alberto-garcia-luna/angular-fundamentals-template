@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { formatDate } from '@angular/common';
 import { mockedAuthorsList } from '@app/shared/mocks/mock';
 export class Course {
   id: string = '';
@@ -33,21 +32,6 @@ export class CourseCardComponent {
 
   showCourseButtonClick() {
     this.clickOnShow.emit();
-  }
-
-  getFormattedDate(date: string | Date, format?: string): string {
-    if(!format){
-      format = 'dd.MM.yyyy'
-    }
-
-    return formatDate(date, format, 'en-US');
-  }
-
-  getFormattedHours(totalMinutes: number): string {
-    const hours: number = Math.floor(totalMinutes / 60);
-    const minutes: number = totalMinutes % 60;
-
-    return hours + ":" + minutes.toLocaleString('en-US', {minimumIntegerDigits: 2}) + " hours";
   }
 
   getAuthorsName(authorId: string): string {

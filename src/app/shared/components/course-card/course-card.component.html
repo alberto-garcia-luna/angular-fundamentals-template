@@ -15,13 +15,13 @@
             <div>
               <b>Duration: </b>
               <span class="course-card__duration">
-                {{getFormattedHours(course.duration)}}
+                {{course.duration | duration}}
               </span>
             </div>
             <div>
               <b>Created: </b>
               <span class="course-card__date">
-                {{getFormattedDate(course.creationDate)}}
+                {{course.creationDate | customDate}}
               </span>
             </div>
         </div>
