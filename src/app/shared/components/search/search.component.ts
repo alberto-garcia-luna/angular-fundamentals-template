@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormControl, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
+  @ViewChild("searchForm") public searchForm!: NgForm;
   // Use the name `placeholder` for the @Input.
   @Input() placeholder: string = '';
   // Use the name `search` for the @Output.
@@ -14,10 +15,10 @@ export class SearchComponent {
 
   searchButtonText: string = 'Search';
   searchTextField: FormControl = new FormControl('');
-  placeholderText: string = 'Enter your search query';
 
-  searchButtonClick() {
+  searchButtonClick(event: Event) {
     this.search.emit();
+    this.searchForm.onSubmit(event);
   }
 
   onSubmit(searchItem: any) {

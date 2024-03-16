@@ -8,7 +8,7 @@
 </app-header>
 <div class="app-root">
   <!-- Search component -->
-  <app-search (search)="searchClick($event)"></app-search>
+  <app-search [placeholder]="searchPlaceholderText" (search)="searchClick($event)"></app-search>
 
   <!-- Info component -->
   <app-info [title]="infoTitle" [text]="infoText">

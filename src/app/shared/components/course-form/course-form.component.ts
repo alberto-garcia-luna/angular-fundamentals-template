@@ -45,6 +45,7 @@ export class CourseFormComponent implements OnInit {
       title: this.title,
       description: this.description,
       duration: this.duration,
+      author: this.author,
       authors: this.authors
     });
   }

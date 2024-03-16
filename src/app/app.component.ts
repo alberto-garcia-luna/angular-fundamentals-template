@@ -18,6 +18,7 @@ export class AppComponent {
   defaultUsername: string = 'Harry Potter';
   editButtonIconName: string = 'edit';
   deleteButtonIconName: string = 'delete';
+  searchPlaceholderText: string = 'Enter your search query';
 
   headerButtonText: string = '';
   infoTitle: string = '';
