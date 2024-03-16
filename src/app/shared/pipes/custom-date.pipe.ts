@@ -8,7 +8,7 @@ export class CustomDatePipe implements PipeTransform {
     // Add your code here
     transform(value: string | Date, format?: string) {
         if(!format){
-            format = 'dd.MM.yyyy'
+            format = 'dd.M.yyyy'
         }
     
         return formatDate(value, format, 'en-US');

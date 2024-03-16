@@ -21,7 +21,7 @@
           <ng-template [ngIf]="email.invalid && (email.touched || submitted)">
             <span id="emailErrorMessage" class="text-danger">
               <ng-template [ngIf]="email.errors?.['required']">Email is required.</ng-template>
-              <ng-template [ngIf]="email.errors?.['emailValidator']">Email is not valid.</ng-template>
+              <ng-template [ngIf]="!email.errors?.['required'] && email.errors?.['emailValidator']">Email is not valid.</ng-template>
             </span>
           </ng-template>
         </div>

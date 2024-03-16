@@ -10,9 +10,6 @@
   <!-- Search component -->
   <app-search (search)="searchClick($event)"></app-search>
 
-  <!-- Course Form component -->
-  <app-course-form></app-course-form>
-
   <!-- Info component -->
   <app-info [title]="infoTitle" [text]="infoText">
     <app-button [buttonText]="infoButtonText" (click)="addNewCourseClick($event)"></app-button>
@@ -38,6 +35,9 @@
 
   <!-- Registration Form component -->
   <app-registration-form></app-registration-form>
+
+  <!-- Course Form component -->
+  <app-course-form></app-course-form>
 
   <!-- Modal component -->
   <!-- <app-modal [message]="'Message'" [title]="'Title'" [okButtonText]="'Ok'" [cancelButtonText]="'Cancel'"></app-modal> -->

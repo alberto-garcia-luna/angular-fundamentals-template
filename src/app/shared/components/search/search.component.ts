@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -12,8 +13,14 @@ export class SearchComponent {
   @Output() search = new EventEmitter();
 
   searchButtonText: string = 'Search';
+  searchTextField: FormControl = new FormControl('');
+  placeholderText: string = 'Enter your search query';
 
   searchButtonClick() {
     this.search.emit();
+  }
+
+  onSubmit(searchItem: any) {
+    console.log(searchItem);
   }
 }

@@ -20,8 +20,8 @@ export class CourseFormComponent implements OnInit {
   addCourseButtonText: string = 'Create Course';
   cancelButtonText: string = 'Cancel';
   deleteButtonIconName: string = 'delete';
+  
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
-
   title: FormControl = new FormControl('', Validators.compose([
     Validators.required,
     Validators.minLength(2)
@@ -38,16 +38,13 @@ export class CourseFormComponent implements OnInit {
   author: FormControl = new FormControl('', Validators.compose([
     Validators.minLength(2)
   ]));
-  authors: FormArray = new FormArray<FormControl>([], Validators.compose([
-    Validators.required
-  ]));
+  authors: FormArray = new FormArray<FormControl>([]);
 
   ngOnInit(): void {
     this.courseForm = new FormGroup({
       title: this.title,
       description: this.description,
       duration: this.duration,
-      author: this.author,
       authors: this.authors
     });
   }
