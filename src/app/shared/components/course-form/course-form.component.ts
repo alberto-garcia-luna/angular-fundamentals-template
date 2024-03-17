@@ -18,38 +18,60 @@ export class Author {
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  constructor(public fb: FormBuilder, public library: FaIconLibrary) {
-    library.addIconPacks(fas);
-  }
   courseForm!: FormGroup;
   newAuthor!: FormGroup;
+
+  // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
+  title: FormControl;
+  description: FormControl;
+  duration: FormControl;
+  author: FormControl;
+
+  authors: FormArray;
+  courseAuthors: FormArray;
+
+  constructor(public fb: FormBuilder, public library: FaIconLibrary) {
+    library.addIconPacks(fas);
+
+    this.title = new FormControl('', Validators.compose([
+      Validators.required,
+      Validators.minLength(2)
+    ]));
+    this.description = new FormControl('', Validators.compose([
+      Validators.required,
+      Validators.minLength(2)
+    ]));
+    this.duration = new FormControl(0, Validators.compose([
+      Validators.required,
+      Validators.min(0)
+    ]));
+    this.author = new FormControl('', Validators.compose([
+      Validators.minLength(2),
+      forbiddenAuthorName(/^[a-z0-9 ]+$/i)
+    ]));
+
+    this.authors = fb.array([]);
+    this.courseAuthors = fb.array([]);
+
+    this.courseForm = fb.group({
+      title: this.title,
+      description: this.description,
+      duration: this.duration,
+      authors: this.courseAuthors
+    });
+
+    this.newAuthor = new FormGroup({
+      author: this.author,
+      authors: this.authors
+    });
+  }
+  
   submitted: boolean = false;
   addAuthorButtonText: string = 'Create Author';
   addCourseButtonText: string = 'Create Course';
   cancelButtonText: string = 'Cancel';
   deleteButtonIconName: string = 'delete';
   addButtonIconName: string = 'add';
-  
-  // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
-  title: FormControl = new FormControl('', Validators.compose([
-    Validators.required,
-    Validators.minLength(2)
-  ]));
-  description: FormControl = new FormControl('', Validators.compose([
-    Validators.required,
-    Validators.minLength(2)
-  ]));
-  duration: FormControl = new FormControl(0, Validators.compose([
-    Validators.required,
-    Validators.min(0)
-  ]));
-
-  author: FormControl = new FormControl('', Validators.compose([
-    Validators.minLength(2),
-    forbiddenAuthorName(/^[a-z0-9 ]+$/i)
-  ]));
-  authors: FormArray = new FormArray<FormControl>([]);
-  courseAuthors: FormArray = new FormArray<FormControl>([]);
 
   ngOnInit(): void {
     let authorList = this.getAuthors();
@@ -58,17 +80,6 @@ export class CourseFormComponent implements OnInit {
         id: item.id,
         name: item.name
       }));
-    });
-
-    this.courseForm = new FormGroup({
-      title: this.title,
-      description: this.description,
-      duration: this.duration,
-      authors: this.courseAuthors
-    });
-    this.newAuthor = new FormGroup({
-      author: this.author,
-      authors: this.authors
     });
   }
 
