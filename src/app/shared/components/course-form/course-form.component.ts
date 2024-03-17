@@ -121,14 +121,14 @@ export class CourseFormComponent implements OnInit {
     if (authorIndex > -1)
     {
       this.authors.removeAt(authorIndex);
+    }
 
-      this.courseAuthors.push(new FormControl({
-        id: authorItem.id,
-        name: authorItem.name
-      }));
+    this.courseAuthors.push(new FormControl({
+      id: authorItem.id,
+      name: authorItem.name
+    }));
 
-      console.log('Author added to course: ' + authorItem.name);
-    }    
+    console.log('Author added to course: ' + authorItem.name);
   }
 
   deleteAuthorFromCourse(authorItem: Author) {
@@ -142,14 +142,14 @@ export class CourseFormComponent implements OnInit {
     if (authorIndex > -1)
     {
       this.courseAuthors.removeAt(authorIndex);
-
-      this.authors.push(new FormControl({
-        id: authorItem.id,
-        name: authorItem.name
-      }));
-
-      console.log('Author deleted from course: ' + authorItem.name);
     }
+
+    this.authors.push(new FormControl({
+      id: authorItem.id,
+      name: authorItem.name
+    }));
+
+    console.log('Author deleted from course: ' + authorItem.name);
   }
 
   onCancel() {
