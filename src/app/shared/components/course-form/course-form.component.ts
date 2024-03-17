@@ -19,7 +19,6 @@ export class Author {
 })
 export class CourseFormComponent implements OnInit {
   courseForm!: FormGroup;
-  newAuthor!: FormGroup;
 
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
   title: FormControl;
@@ -57,12 +56,12 @@ export class CourseFormComponent implements OnInit {
       title: this.title,
       description: this.description,
       duration: this.duration,
-      authors: this.courseAuthors
-    });
-
-    this.newAuthor = new FormGroup({
       author: this.author,
-      authors: this.authors
+      authors: this.courseAuthors,
+      newAuthor: fb.group({
+        author: this.author,
+        authors: this.authors
+      })
     });
   }
   

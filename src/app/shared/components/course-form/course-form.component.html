@@ -51,44 +51,42 @@
         </ng-template>
       </div>      
       <div class="separator"></div>
-      <form [formGroup]="newAuthor">
-        <h3>Authors</h3>
-        <div class="form__control">
-          <div class="course__flex">
-            <!--Use the name `author` for the form control.-->
-            <input type="text" id="author" placeholder="Input Author Name" formControlName="author" />
-            <app-button id="createAuthor" [buttonText]="addAuthorButtonText" (click)="createAuthor(author.value)"></app-button>
-          </div>
-          <ng-template [ngIf]="author.invalid && (author.touched || submitted)">
-            <span id="authorErrorMessage" class="text-danger">
-              <ng-template [ngIf]="author.errors?.['minlength']">Author minimum length is 2.</ng-template>
-              <ng-template [ngIf]="author.errors?.['authorValidator']">New author should contain only latin letters and numbers.</ng-template>
-            </span>
-          </ng-template>
-          <h4>Authors</h4>
-          <div class="course__authors">
-            <!--Use the name `authors` for the form array.-->
-            <ng-container *ngFor="let authorItem of authors.controls; let authorIndex = index">
-              <div class="course__authors-item">
-                <p>{{authorItem.value.name}}</p>
-              </div>
-              <app-button [iconName]="deleteButtonIconName" (click)="deleteAuthor(authorIndex)"></app-button>
-              <app-button [iconName]="addButtonIconName" (click)="addAuthor(authorItem.value)"></app-button>
-            </ng-container>
-          </div>
-          <h4>Course Authors</h4>
-          <div class="course__authors">
-            <!--Use the name `authors` for the form array.-->
-            <ng-container *ngFor="let authorItem of courseAuthors.controls">
-              <div class="course__authors-item">
-                <p>{{authorItem.value.name}}</p>
-              </div>
-              <app-button [iconName]="deleteButtonIconName" (click)="deleteAuthorFromCourse(authorItem.value)"></app-button>
-              <app-button [iconName]="addButtonIconName" (click)="addAuthor(authorItem.value.id)"></app-button>
-            </ng-container>
-          </div>
+      <h3>Authors</h3>
+      <div class="form__control">
+        <div class="course__flex">
+          <!--Use the name `author` for the form control.-->
+          <input type="text" id="author" placeholder="Input Author Name" formControlName="author" />
+          <app-button id="createAuthor" [buttonText]="addAuthorButtonText" (click)="createAuthor(author.value)"></app-button>
         </div>
-      </form>
+        <ng-template [ngIf]="author.invalid && (author.touched || submitted)">
+          <span id="authorErrorMessage" class="text-danger">
+            <ng-template [ngIf]="author.errors?.['minlength']">Author minimum length is 2.</ng-template>
+            <ng-template [ngIf]="author.errors?.['authorValidator']">New author should contain only latin letters and numbers.</ng-template>
+          </span>
+        </ng-template>
+        <h4>Authors</h4>
+        <div class="course__authors">
+          <!--Use the name `authors` for the form array.-->
+          <ng-container *ngFor="let authorItem of authors.controls; let authorIndex = index">
+            <div class="course__authors-item">
+              <p>{{authorItem.value.name}}</p>
+            </div>
+            <app-button [iconName]="deleteButtonIconName" (click)="deleteAuthor(authorIndex)"></app-button>
+            <app-button [iconName]="addButtonIconName" (click)="addAuthor(authorItem.value)"></app-button>
+          </ng-container>
+        </div>
+        <h4>Course Authors</h4>
+        <div class="course__authors">
+          <!--Use the name `authors` for the form array.-->
+          <ng-container *ngFor="let authorItem of courseAuthors.controls">
+            <div class="course__authors-item">
+              <p>{{authorItem.value.name}}</p>
+            </div>
+            <app-button [iconName]="deleteButtonIconName" (click)="deleteAuthorFromCourse(authorItem.value)"></app-button>
+            <app-button [iconName]="addButtonIconName" (click)="addAuthor(authorItem.value.id)"></app-button>
+          </ng-container>
+        </div>
+      </div>
       <div class="form__action">
         <app-button [buttonText]="addCourseButtonText" (click)="onSubmit(courseForm.value)"></app-button>
         <app-button [buttonText]="cancelButtonText" (click)="onCancel()"></app-button>
