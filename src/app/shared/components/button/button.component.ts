@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fas, IconDefinition, IconPrefix, IconName, faTrash, faPencil, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { fas, IconDefinition, IconPrefix, IconName, faTrash, faPencil, faQuestion, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-button',
@@ -38,6 +38,9 @@ export class ButtonComponent {
         break;
       case "edit":
         myIcon = faPencil;
+        break;
+      case "add":
+        myIcon = faPlus;
         break;
       default: 
         break;

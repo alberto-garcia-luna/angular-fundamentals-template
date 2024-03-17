@@ -21,6 +21,10 @@ export class EmailValidatorDirective implements Validator {
 }
 export function emailValidatorFunction(regExp: RegExp): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+        if (!control.value) {
+            return null;
+        }
+
         const validEmail = regExp.test(control.value);
         return !validEmail 
             ? {emailValidator: { value: control.value }} 
