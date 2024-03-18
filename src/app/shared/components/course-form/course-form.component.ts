@@ -95,11 +95,12 @@ export class CourseFormComponent implements OnInit {
     if (!authorName || this.author.invalid) {
       return;
     }
-    
-    this.authorsList.push(new FormControl({
+
+    this.authors.push(new FormControl({
       id: crypto.randomUUID(),
       name: authorName
     }));
+
     this.author.reset();
 
     console.log('Author created: ' + authorName);
