@@ -67,7 +67,7 @@
         <h4>Authors</h4>
         <div class="course__authors">
           <!--Use the name `authors` for the form array.-->
-          <ng-container *ngFor="let authorItem of authors.controls; let authorIndex = index">
+          <ng-container *ngFor="let authorItem of authorsList.controls; let authorIndex = index">
             <div class="course__authors-item">
               <p>{{authorItem.value.name}}</p>
             </div>
@@ -78,7 +78,7 @@
         <h4>Course Authors</h4>
         <div class="course__authors">
           <!--Use the name `authors` for the form array.-->
-          <ng-container *ngFor="let authorItem of courseAuthors.controls">
+          <ng-container *ngFor="let authorItem of authors.controls">
             <div class="course__authors-item">
               <p>{{authorItem.value.name}}</p>
             </div>

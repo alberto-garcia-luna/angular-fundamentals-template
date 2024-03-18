@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AbstractControl,
-  FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators
+  AbstractControl,FormArray, FormBuilder, FormControl, 
+  FormGroup, ValidationErrors, ValidatorFn, Validators
 } from '@angular/forms';
 import { mockedAuthorsList } from '@app/shared/mocks/mock';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -26,8 +26,8 @@ export class CourseFormComponent implements OnInit {
   duration: FormControl;
   author: FormControl;
 
+  authorsList: FormArray;
   authors: FormArray;
-  courseAuthors: FormArray;
 
   constructor(public fb: FormBuilder, public library: FaIconLibrary) {
     library.addIconPacks(fas);
@@ -49,18 +49,18 @@ export class CourseFormComponent implements OnInit {
       forbiddenAuthorName(/^[a-z0-9 ]+$/i)
     ]));
 
+    this.authorsList = fb.array([]);
     this.authors = fb.array([]);
-    this.courseAuthors = fb.array([]);
 
     this.courseForm = fb.group({
       title: this.title,
       description: this.description,
       duration: this.duration,
       author: this.author,
-      authors: this.courseAuthors,
+      authors: this.authors,
       newAuthor: fb.group({
         author: this.author,
-        authors: this.authors
+        authors: this.authorsList
       })
     });
   }
@@ -75,7 +75,7 @@ export class CourseFormComponent implements OnInit {
   ngOnInit(): void {
     let authorList = this.getAuthors();
     authorList.forEach(item => {
-      this.authors.push(new FormControl({
+      this.authorsList.push(new FormControl({
         id: item.id,
         name: item.name
       }));
@@ -96,7 +96,7 @@ export class CourseFormComponent implements OnInit {
       return;
     }
     
-    this.authors.push(new FormControl({
+    this.authorsList.push(new FormControl({
       id: crypto.randomUUID(),
       name: authorName
     }));
@@ -106,7 +106,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   deleteAuthor(authorIndex: number) {
-    this.authors.removeAt(authorIndex);
+    this.authorsList.removeAt(authorIndex);
     console.log('Author deleted');
   }
 
@@ -115,15 +115,15 @@ export class CourseFormComponent implements OnInit {
       return;
     }
 
-    let authorIndex = this.authors.value.findIndex(
+    let authorIndex = this.authorsList.value.findIndex(
       (item: { id: string; }) => item.id === authorItem.id
     );
     if (authorIndex > -1)
     {
-      this.authors.removeAt(authorIndex);
+      this.authorsList.removeAt(authorIndex);
     }
 
-    this.courseAuthors.push(new FormControl({
+    this.authors.push(new FormControl({
       id: authorItem.id,
       name: authorItem.name
     }));
@@ -136,15 +136,15 @@ export class CourseFormComponent implements OnInit {
       return;
     }
 
-    let authorIndex = this.courseAuthors.value.findIndex(
+    let authorIndex = this.authors.value.findIndex(
       (item: { id: string; }) => item.id === authorItem.id
     );
     if (authorIndex > -1)
     {
-      this.courseAuthors.removeAt(authorIndex);
+      this.authors.removeAt(authorIndex);
     }
 
-    this.authors.push(new FormControl({
+    this.authorsList.push(new FormControl({
       id: authorItem.id,
       name: authorItem.name
     }));
