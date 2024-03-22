@@ -32,19 +32,19 @@ export class CourseFormComponent implements OnInit {
   constructor(public fb: FormBuilder, public library: FaIconLibrary) {
     library.addIconPacks(fas);
 
-    this.title = new FormControl('', Validators.compose([
+    this.title = fb.control('', Validators.compose([
       Validators.required,
       Validators.minLength(2)
     ]));
-    this.description = new FormControl('', Validators.compose([
+    this.description = fb.control('', Validators.compose([
       Validators.required,
       Validators.minLength(2)
     ]));
-    this.duration = new FormControl(0, Validators.compose([
+    this.duration = fb.control(0, Validators.compose([
       Validators.required,
       Validators.min(0)
     ]));
-    this.author = new FormControl('', Validators.compose([
+    this.author = fb.control('', Validators.compose([
       Validators.minLength(2),
       forbiddenAuthorName(/^[a-z0-9 ]+$/i)
     ]));
@@ -95,12 +95,11 @@ export class CourseFormComponent implements OnInit {
     if (!authorName || this.author.invalid) {
       return;
     }
-
-    this.authors.push(new FormControl({
+    
+    this.authorsList.push(new FormControl({
       id: crypto.randomUUID(),
       name: authorName
     }));
-
     this.author.reset();
 
     console.log('Author created: ' + authorName);
@@ -122,12 +121,12 @@ export class CourseFormComponent implements OnInit {
     if (authorIndex > -1)
     {
       this.authorsList.removeAt(authorIndex);
-    }
 
-    this.authors.push(new FormControl({
-      id: authorItem.id,
-      name: authorItem.name
-    }));
+      this.authors.push(new FormControl({
+        id: authorItem.id,
+        name: authorItem.name
+      }));
+    }
 
     console.log('Author added to course: ' + authorItem.name);
   }
@@ -143,12 +142,12 @@ export class CourseFormComponent implements OnInit {
     if (authorIndex > -1)
     {
       this.authors.removeAt(authorIndex);
-    }
 
-    this.authorsList.push(new FormControl({
-      id: authorItem.id,
-      name: authorItem.name
-    }));
+      this.authorsList.push(new FormControl({
+        id: authorItem.id,
+        name: authorItem.name
+      }));
+    }
 
     console.log('Author deleted from course: ' + authorItem.name);
   }

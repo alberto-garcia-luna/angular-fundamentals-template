@@ -11,10 +11,7 @@ export class CustomDatePipe implements PipeTransform {
             format = 'dd.M.yyyy'
         }
         const datepipe: DatePipe = new DatePipe('en-US')
-        let result = datepipe.transform(value, format);
-        if (result === '15.6.2023')
-            return '15.5.2023';
-        else
-            return result;
+        
+        return datepipe.transform(value, format);
     }
 }
