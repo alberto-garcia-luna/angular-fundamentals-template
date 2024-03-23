@@ -18,15 +18,13 @@ export class AppComponent {
   defaultUsername: string = 'Harry Potter';
   editButtonIconName: string = 'edit';
   deleteButtonIconName: string = 'delete';
-  searchPlaceholderText: string = 'Enter your search query';
 
   headerButtonText: string = '';
   infoTitle: string = '';
   infoText: string = '';
   infoButtonText: string = '';
 
-  testUser = mockedUser;
-  testCourses = mockedCoursesList;
+  testUser = mockedUser;  
   testCourse = mockedCoursesList[0];
 
   ngOnInit() {
@@ -50,21 +48,5 @@ export class AppComponent {
 
   addNewCourseClick(event?: MouseEvent) {
     console.log('Add New Course button event');
-  }
-
-  showCourseClick(event?: MouseEvent) {
-    console.log('Show Course button event');
-  }
-
-  editCourseClick(event?: MouseEvent) {
-    console.log('Edit Course button event');
-  }
-
-  deleteCourseClick(event?: MouseEvent) {
-    console.log('Delete Course button event');
-  }
-
-  searchClick(event?: MouseEvent) {
-    console.log('Search button event');
   }
 }

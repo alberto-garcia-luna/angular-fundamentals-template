@@ -1,5 +1,4 @@
-<div class="app-button">
-<!--<div class="app-button" (click)="buttonClick()">-->
+<div [ngClass]="disabled ? 'app-button__inactive' : 'app-button'">
   <!-- Replace the text below with your code -->
   <ng-container *ngIf="iconName !== ''">
     <fa-icon [icon]="buttonIcon"></fa-icon>

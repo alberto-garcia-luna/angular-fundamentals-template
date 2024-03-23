@@ -21,48 +21,18 @@ export class CourseFormComponent implements OnInit {
   courseForm!: FormGroup;
 
   // Use the names `title`, `description`, `author`, 'authors' (for authors list), `duration` for the form controls.
-  title: FormControl;
-  description: FormControl;
-  duration: FormControl;
-  author: FormControl;
+  title!: FormControl;
+  description!: FormControl;
+  duration!: FormControl;
+  author!: FormControl;
 
-  authorsList: FormArray;
-  authors: FormArray;
+  authorsList!: FormArray;
+  authors!: FormArray;
 
   constructor(public fb: FormBuilder, public library: FaIconLibrary) {
     library.addIconPacks(fas);
 
-    this.title = fb.control('', Validators.compose([
-      Validators.required,
-      Validators.minLength(2)
-    ]));
-    this.description = fb.control('', Validators.compose([
-      Validators.required,
-      Validators.minLength(2)
-    ]));
-    this.duration = fb.control(0, Validators.compose([
-      Validators.required,
-      Validators.min(0)
-    ]));
-    this.author = fb.control('', Validators.compose([
-      Validators.minLength(2),
-      forbiddenAuthorName(/^[a-z0-9 ]+$/i)
-    ]));
-
-    this.authorsList = fb.array([]);
-    this.authors = fb.array([]);
-
-    this.courseForm = fb.group({
-      title: this.title,
-      description: this.description,
-      duration: this.duration,
-      author: this.author,
-      authors: this.authors,
-      newAuthor: fb.group({
-        author: this.author,
-        authors: this.authorsList
-      })
-    });
+    this.createCourseForm();
   }
   
   submitted: boolean = false;
@@ -79,6 +49,40 @@ export class CourseFormComponent implements OnInit {
         id: item.id,
         name: item.name
       }));
+    });
+  }
+
+  createCourseForm(){
+    this.title = this.fb.control('', Validators.compose([
+      Validators.required,
+      Validators.minLength(2)
+    ]));
+    this.description = this.fb.control('', Validators.compose([
+      Validators.required,
+      Validators.minLength(2)
+    ]));
+    this.duration = this.fb.control(0, Validators.compose([
+      Validators.required,
+      Validators.min(0)
+    ]));
+    this.author = this.fb.control('', Validators.compose([
+      Validators.minLength(2),
+      forbiddenAuthorName(/^[a-z0-9 ]+$/i)
+    ]));
+
+    this.authorsList = this.fb.array([]);
+    this.authors = this.fb.array([]);
+
+    this.courseForm = this.fb.group({
+      title: this.title,
+      description: this.description,
+      duration: this.duration,
+      author: this.author,
+      authors: this.authors,
+      newAuthor: this.fb.group({
+        author: this.author,
+        authors: this.authorsList
+      })
     });
   }
 

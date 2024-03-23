@@ -2,6 +2,7 @@
   <!-- Course Card component -->
   <app-course-card [editable]="editable" [course]="course" (clickOnShow)="showCourseButtonClick()">
     <app-button [iconName]="deleteButtonName" (click)="deleteCourseButtonClick()"></app-button>
-    <app-button [iconName]="editButtonName" (click)="editCourseButtonClick()"></app-button>
+    <app-button [iconName]="editButtonName" (click)="editCourseButtonClick()"
+      routerLink="/courses/edit/{{course.id}}"></app-button>
   </app-course-card>
 </div>

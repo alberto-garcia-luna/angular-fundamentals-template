@@ -37,7 +37,8 @@
         </div>
       </div>
       <div class="form__action">
-        <app-button [buttonText]="registrationButtonText" (click)="onSubmit(registrationForm.value)"></app-button>
+        <app-button [buttonText]="registrationButtonText" [disabled]="registrationForm.invalid === true" 
+          (click)="onSubmit(registrationForm.value)"></app-button>
       </div>
     </div>
   </form>

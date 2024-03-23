@@ -89,7 +89,7 @@
       </div>
       <div class="form__action">
         <app-button [buttonText]="addCourseButtonText" (click)="onSubmit(courseForm.value)"></app-button>
-        <app-button [buttonText]="cancelButtonText" (click)="onCancel()"></app-button>
+        <app-button [buttonText]="cancelButtonText" (click)="onCancel()" routerLink="/courses"></app-button>
       </div>
     </div>
   </div>

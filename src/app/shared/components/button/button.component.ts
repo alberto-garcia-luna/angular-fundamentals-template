@@ -19,15 +19,11 @@ export class ButtonComponent {
 
   @Input() iconName: string = '';
 
-  //@Output() newButtonClick = new EventEmitter();
+  @Input() disabled: boolean = false;
   
   ngOnInit() {
     this.buttonIcon = this.getIcon(this.iconName)
   }
-
-  //buttonClick() {
-  //  this.newButtonClick.emit();
-  //}
 
   getIcon(id: string): IconDefinition {
     let myIcon: IconDefinition = faQuestion;

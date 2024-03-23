@@ -3,41 +3,51 @@
     <div class="app-header-right-panel-username">
       <p>{{testUser.username}}</p>
     </div>
-    <app-button [buttonText]="headerButtonText" (click)="loginClick($event)"></app-button>
+    <app-button [buttonText]="headerButtonText" (click)="loginClick($event)" routerLink="./login"></app-button>
   </div>
 </app-header>
 <div class="app-root">
-  <!-- Search component -->
-  <app-search [placeholder]="searchPlaceholderText" (search)="searchClick($event)"></app-search>
+  <router-outlet></router-outlet>
 
+  <!-- Courses component -->
+  <!--
+  <app-courses></app-courses>
+  -->
+  
   <!-- Info component -->
+  <!--
   <app-info [title]="infoTitle" [text]="infoText">
     <app-button [buttonText]="infoButtonText" (click)="addNewCourseClick($event)"></app-button>
   </app-info>
+  -->
 
   <!-- Course Card component -->
+  <!--
   <app-course-card [editable]="true" [course]="testCourse" (clickOnShow)="showCourseClick($event)">
     <app-button [iconName]="deleteButtonIconName" (click)="deleteCourseClick($event)"></app-button>
     <app-button [iconName]="editButtonIconName" (click)="editCourseClick($event)"></app-button>
   </app-course-card>
-
-  <!-- Course list component -->
-  <app-course-list [editable]="true" [courses]="testCourses"
-    (showCourse)="showCourseClick($event)" (deleteCourse)="deleteCourseClick($event)" 
-    (editCourse)="editCourseClick($event)">
-  </app-course-list>
+  -->
 
   <!-- Course info component -->
+  <!--
   <app-course-info [course]="testCourse"></app-course-info>
+  -->
 
   <!-- Login Form component -->
+  <!--
   <app-login-form></app-login-form>
+  -->
 
   <!-- Registration Form component -->
+  <!--
   <app-registration-form></app-registration-form>
+  -->
 
   <!-- Course Form component -->
+  <!--
   <app-course-form></app-course-form>
+  -->
 
   <!-- Modal component -->
   <!-- <app-modal [message]="'Message'" [title]="'Title'" [okButtonText]="'Ok'" [cancelButtonText]="'Cancel'"></app-modal> -->
