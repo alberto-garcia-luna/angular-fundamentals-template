@@ -4,21 +4,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '@shared/shared.module';
+import { CoursesModule } from './features/courses/courses.module';
 import { AppComponent } from '@app/app.component';
-import { CourseListComponent } from './features/courses/course-list/course-list.component';
-import { CourseInfoComponent } from '@features/course-info/course-info.component';
-import { CoursesComponent } from './features/courses/courses.component';
 import { NotAuthorizedGuard } from '@app/auth/guards/not-authorized.guard';
 import { AuthorizedGuard } from '@app/auth/guards/authorized.guard';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { CoursesService } from '@app/services/courses.service';
+import { routing } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent, 
-    CourseInfoComponent, 
-    CourseListComponent, 
-    CoursesComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +22,9 @@ import { CoursesService } from '@app/services/courses.service';
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    CoursesModule,
+    routing
   ],
   exports: [RouterModule],
   providers: [
