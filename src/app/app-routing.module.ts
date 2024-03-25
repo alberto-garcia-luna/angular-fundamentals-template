@@ -16,11 +16,11 @@ export const routes: Routes = [
     },
     {
         path: 'courses/add', 
-        loadChildren: () => import('./features/courses/courses.module').then(module => module.CoursesModule) 
+        loadChildren: () => import('./shared/shared.module').then(module => module.SharedModule)
     },
     {
         path: 'courses/edit/:id', 
-        loadChildren: () => import('./features/courses/courses.module').then(module => module.CoursesModule) 
+        loadChildren: () => import('./shared/shared.module').then(module => module.SharedModule)
     },
     {
         path: 'courses/:id',

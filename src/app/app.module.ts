@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '@shared/shared.module';
 import { CoursesModule } from './features/courses/courses.module';
 import { AppComponent } from '@app/app.component';
@@ -24,6 +25,7 @@ import { routing } from './app-routing.module';
     ReactiveFormsModule,
     RouterModule,
     CoursesModule,
+    HttpClientModule,
     routing
   ],
   exports: [RouterModule],

@@ -1,42 +1,109 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+
+const CoursesApiUrl: string = 'http://localhost:4000/Courses';
+const AuthorsApiUrl: string = 'http://localhost:4000/Authors';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoursesService {
-    getAll() {
-        // Add your code here
+    constructor(private http: HttpClient) {}
+
+    getAll(): Observable<Course[]> {
+        return this.http.get<CoursesResponse>(`${CoursesApiUrl}/all`)
+            .pipe(map(response => { 
+                return response.result; 
+            }));
     }
 
-    createCourse(course: any) { // replace 'any' with the required interface
+    createCourse(course: Course) { // replace 'any' with the required interface
         // Add your code here
+        return this.http.post(`${CoursesApiUrl}/add`, course);
     }
 
-    editCourse(id: string, course: any) { // replace 'any' with the required interface
+    editCourse(id: string, course: Course) { // replace 'any' with the required interface
         // Add your code here
+        return this.http.put(`${CoursesApiUrl}/${id}`, course);
     }
 
-    getCourse(id: string) {
+    getCourse(id: string): Observable<Course> {
         // Add your code here
+        return this.http.get<CourseResponse>(`${CoursesApiUrl}/${id}`)
+            .pipe(map(response => { return response.result; }));
     }
 
     deleteCourse(id: string) {
-        // Add your code here
+        return this.http.delete(`${CoursesApiUrl}/${id}`);
     }
 
-    filterCourses(value: string) {
-        // Add your code here
+    filterCourses(value?: string): Observable<Course[]> {
+        let getOptions = {};
+        if (value) {
+            getOptions = {
+                name: { title: value }
+            }
+        }
+
+        return this.http.get<CoursesResponse>(`${CoursesApiUrl}/filter`, getOptions)
+            .pipe(map(response => { return response.result; }));
     }
 
-    getAllAuthors() {
+    getAllAuthors(): Observable<Author[]> {
         // Add your code here
+        return this.http.get<AuthorsResponse>(`${AuthorsApiUrl}/all`)
+            .pipe(map(response => { return response.result; }));
     }
 
     createAuthor(name: string) {
         // Add your code here
+        return this.http.post(`${AuthorsApiUrl}/add`, {
+            name: name
+        });
     }
 
-    getAuthorById(id: string) {
+    getAuthorById(id: string): Observable<Author> {
         // Add your code here
+        return this.http.get<AuthorResponse>(`${AuthorsApiUrl}/${id}`)
+            .pipe(map(response => { return response.result; }));
     }
+
+    deleteAuthor(id: string) {
+        return this.http.delete(`${AuthorsApiUrl}/${id}`);
+    }
+}
+
+export interface CoursesResponse {
+    successful: boolean;
+    result: Course[];
+}
+
+export interface CourseResponse {
+    successful: boolean;
+    result: Course;
+}
+
+export interface Course {
+    id: string;
+    title: string;
+    description: string;
+    creationDate: string | Date;
+    duration: number;
+    authors: string[];
+}
+
+export interface AuthorsResponse {
+    successful: boolean;
+    result: Author[];
+}
+
+export interface AuthorResponse {
+    successful: boolean;
+    result: Author;
+}
+
+export interface Author {
+    id: string;
+    name: string;
 }

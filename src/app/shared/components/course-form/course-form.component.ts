@@ -3,14 +3,10 @@ import {
   AbstractControl,FormArray, FormBuilder, FormControl, 
   FormGroup, ValidationErrors, ValidatorFn, Validators
 } from '@angular/forms';
-import { mockedAuthorsList } from '@app/shared/mocks/mock';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Author, Course, CoursesService } from '@app/services/courses.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-
-export class Author {
-  id: string = '';
-  name: string = '';
-}
 
 @Component({
   selector: 'app-course-form',
@@ -29,9 +25,11 @@ export class CourseFormComponent implements OnInit {
   authorsList!: FormArray;
   authors!: FormArray;
 
-  constructor(public fb: FormBuilder, public library: FaIconLibrary) {
-    library.addIconPacks(fas);
+  constructor(public fb: FormBuilder, public library: FaIconLibrary,    
+    private coursesService: CoursesService, private router: Router,
+    private activatedRoute: ActivatedRoute) {
 
+    library.addIconPacks(fas);
     this.createCourseForm();
   }
   
@@ -43,13 +41,15 @@ export class CourseFormComponent implements OnInit {
   addButtonIconName: string = 'add';
 
   ngOnInit(): void {
-    let authorList = this.getAuthors();
-    authorList.forEach(item => {
-      this.authorsList.push(new FormControl({
-        id: item.id,
-        name: item.name
-      }));
-    });
+    this.getAuthorsList();
+
+    this.activatedRoute.paramMap
+      .subscribe(paramMap => {
+        let id = paramMap.get('id');
+        if (id) {
+          this.getCourse(id);
+        }
+      });  
   }
 
   createCourseForm(){
@@ -86,27 +86,74 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
-  getAuthors(): Author[] {
-    return mockedAuthorsList;
+  onSubmit(course: Course) {
+    this.submitted = true;
+
+    if (!course || this.courseForm.invalid) 
+      return;
+
+    console.log(course);
+
+    this.coursesService.createCourse(course)
+      .subscribe(() => {
+        this.router.navigate(['/courses']);
+      });
   }
 
-  onSubmit(courseItem: any) {
-    this.submitted = true;
-    console.log(courseItem);
+  getCourse(id: string) {
+    this.coursesService.getCourse(id)
+      .subscribe(response => {
+        this.title.setValue(response.title);
+        this.description.setValue(response.description);
+        this.duration.setValue(response.duration);
+        this.description.setValue(response.description);
+        response.authors.forEach(courseAuthorId => {
+          this.authors.clear();
+          let authorInList = this.authorsList.value.find(
+            (item: Author) => item.id === courseAuthorId
+          );
+          let authorInListIndex = this.authorsList.value.findIndex(
+            (item: Author) => item.id === courseAuthorId
+          );
+          if(authorInList) {
+            this.authors.push(this.fb.control({
+              id: authorInList.id,
+              name: authorInList.name
+            }));
+            this.authorsList.removeAt(authorInListIndex);
+          }
+        });
+      });
+  }
+
+  getAuthorsList() {
+    this.coursesService.getAllAuthors()
+      .subscribe(response => {
+        this.populateAuthorsArray(response);        
+      });
+  }
+
+  populateAuthorsArray(authorList: Author[]) {
+    this.authorsList.clear();
+    authorList.forEach(item => {
+      this.authorsList.push(this.fb.control({
+        id: item.id,
+        name: item.name
+      }));
+    });
   }
 
   createAuthor(authorName: string) {
-    if (!authorName || this.author.invalid) {
+    if (!authorName || this.author.invalid)
       return;
-    }
     
-    this.authorsList.push(new FormControl({
-      id: crypto.randomUUID(),
-      name: authorName
-    }));
-    this.author.reset();
-
-    console.log('Author created: ' + authorName);
+    this.coursesService.createAuthor(authorName)
+      .subscribe(() => {
+        this.author.reset();
+        this.getAuthorsList();
+    
+        console.log('Author created: ' + authorName);
+      });    
   }
 
   deleteAuthor(authorIndex: number) {
@@ -120,7 +167,7 @@ export class CourseFormComponent implements OnInit {
     }
 
     let authorIndex = this.authorsList.value.findIndex(
-      (item: { id: string; }) => item.id === authorItem.id
+      (item: Author) => item.id === authorItem.id
     );
     if (authorIndex > -1)
     {
@@ -141,7 +188,7 @@ export class CourseFormComponent implements OnInit {
     }
 
     let authorIndex = this.authors.value.findIndex(
-      (item: { id: string; }) => item.id === authorItem.id
+      (item: Author) => item.id === authorItem.id
     );
     if (authorIndex > -1)
     {

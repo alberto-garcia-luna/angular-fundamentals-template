@@ -1,12 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-export class Course {
-  id: string = '';
-  title: string = '';
-  description: string = '';
-  creationDate: string | Date = '';
-  duration: number = 0;
-  authors: string[] = [];
-}
+import { Router } from '@angular/router';
+import { Course, CoursesService } from '@app/services/courses.service';
 
 @Component({
   selector: 'app-course-list',
@@ -25,15 +19,23 @@ export class CourseListComponent {
   editButtonName: string = 'edit';
   deleteButtonName: string = 'delete';
 
-  showCourseButtonClick() {
+  constructor(private coursesService: CoursesService,
+    private router: Router) {}
+
+  showCourseButtonClick(id: string) {
     this.showCourse.emit();
+    this.router.navigate([`courses/${id}`]);
   }
   
-  editCourseButtonClick() {
+  editCourseButtonClick(id: string) {    
     this.editCourse.emit();
+    this.router.navigate([`courses/edit/${id}`]);
   }
   
-  deleteCourseButtonClick() {
-    this.deleteCourse.emit();
+  deleteCourseButtonClick(id: string) {
+    this.coursesService.deleteCourse(id)
+      .subscribe(() => {
+        this.deleteCourse.emit();
+      });
   }  
 }

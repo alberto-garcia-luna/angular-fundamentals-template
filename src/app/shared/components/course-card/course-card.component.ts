@@ -1,13 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Course } from '@app/services/courses.service';
 import { mockedAuthorsList } from '@app/shared/mocks/mock';
-export class Course {
-  id: string = '';
-  title: string = '';
-  description: string = '';
-  creationDate: string | Date = '';
-  duration: number = 0;
-  authors: string[] = [];
-}
 
 @Component({
   selector: 'app-course-card',
@@ -16,14 +9,7 @@ export class Course {
 })
 export class CourseCardComponent {
   @Input() editable: boolean = false;
-  @Input() course: Course = {
-    id: '',
-    title: '',
-    description: '',
-    creationDate: '',
-    duration: 0,
-    authors: []
-  };
+  @Input() course!: Course;
 
   @Output() clickOnShow = new EventEmitter();
 

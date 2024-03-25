@@ -2,7 +2,7 @@
 <app-search [placeholder]="searchPlaceholderText" (search)="searchClick($event)"></app-search>
 
 <!-- Course list component -->
-<app-course-list [editable]="true" [courses]="testCourses"
+<app-course-list [editable]="true" [courses]="courses"
     (showCourse)="showCourseClick($event)" (deleteCourse)="deleteCourseClick($event)" 
     (editCourse)="editCourseClick($event)">
 </app-course-list>

@@ -26,8 +26,7 @@
             </div>
         </div>
         <div class="course-card__info-actions">
-            <app-button [buttonText]="showCourseButtonText" (click)="showCourseButtonClick()" 
-              routerLink="/courses/{{course.id}}"></app-button>
+            <app-button [buttonText]="showCourseButtonText" (click)="showCourseButtonClick()"></app-button>
             <div *ngIf="editable" class="course-card__buttons">
                 <!--Enter your code here-->
                 <ng-content></ng-content>
