@@ -38,9 +38,9 @@ export class AuthService {
         return this.http.post(`${AuthApiUrl}/register`, user);
     }
 
-    get isAuthorised(): Observable<boolean> {
+    get isAuthorised(): boolean {
         // Add your code here. Get isAuthorized$$ value
-        return this.isAuthorized$$.asObservable();
+        return this.isAuthorized$$.getValue();
     }
 
     set isAuthorised(value: boolean) {
@@ -50,7 +50,7 @@ export class AuthService {
 
     getLoginUrl(): string {
         // Add your code here
-        return `${AuthApiUrl}/login`;
+        return '/login';
     }
 }
 
