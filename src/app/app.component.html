@@ -1,13 +1,13 @@
 <app-header>
   <div class="app-header-right-panel">
     <div class="app-header-right-panel-username">
-      <p>{{testUser.username}}</p>
+      <p>{{user.name}}</p>
     </div>
-    <app-button [buttonText]="headerButtonText" (click)="loginClick($event)" routerLink="./login"></app-button>
+    <app-button [buttonText]="headerButtonText" (click)="logoutClick($event)"></app-button>
   </div>
 </app-header>
 <div class="app-root">
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="loadHeader()"></router-outlet>
 
   <!-- Courses component -->
   <!--

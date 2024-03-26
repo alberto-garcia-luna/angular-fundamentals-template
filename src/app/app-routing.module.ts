@@ -12,7 +12,7 @@ export const routes: Routes = [
     },
     {
         path: 'courses', 
-        loadChildren: () => import('./features/courses/courses.module').then(module => module.CoursesModule) 
+        loadChildren: () => import('./features/courses/courses.module').then(module => module.CoursesModule)
     },
     {
         path: 'courses/add', 
@@ -24,10 +24,10 @@ export const routes: Routes = [
     },
     {
         path: 'courses/:id',
-        loadChildren: () => import('./features/courses/courses.module').then(module => module.CoursesModule) 
+        loadChildren: () => import('./features/courses/courses.module').then(module => module.CoursesModule)
     },
     { path: '', redirectTo: 'courses', pathMatch: 'full' },
-    { path: '**', redirectTo: 'courses'}
+    { path: '**', redirectTo: 'courses' }
 ];
 
 export const routing = RouterModule.forRoot(routes);

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { SessionStorageService } from './session-storage.service';
 
 const AuthApiUrl: string = 'http://localhost:4000';
@@ -15,7 +15,7 @@ export class AuthService {
     
     login(user: User) { // replace 'any' with the required interface
         // Add your code here
-        return this.http.post<AuthResponse>(this.getLoginUrl(), user)
+        return this.http.post<AuthResponse>(`${AuthApiUrl}/login`, user)
             .pipe(map(response => {
                 if(response.successful) {
                     this.sessionStorageService.setToken(response.result);
@@ -26,7 +26,7 @@ export class AuthService {
 
     logout(authToken: string) {
         // Add your code here
-        return this.http.delete(`${AuthApiUrl}/logout/${authToken}`)
+        return this.http.delete(`${AuthApiUrl}/logout`)
             .pipe(map(() => {
                 this.sessionStorageService.deleteToken();
                 this.isAuthorised = false;
@@ -51,6 +51,10 @@ export class AuthService {
     getLoginUrl(): string {
         // Add your code here
         return '/login';
+    }
+
+    getCoursesUrl(): string {
+        return '/courses';
     }
 }
 

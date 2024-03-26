@@ -9,15 +9,23 @@ import { Course, CoursesService } from '@app/services/courses.service';
 })
 export class CourseInfoComponent implements OnInit {
   // Use the names for the input `course`.
-  @Input() course!: Course;
+  @Input() course: Course = {
+    id: '',
+    title: '',
+    description: '',
+    creationDate: '',
+    duration: 0,
+    authors: []
+  };
 
   backCourseButtonText: string = "Back";
+  authorsNames: string[] = [];
 
   constructor(private coursesService: CoursesService,
     private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    if(!this.course) {
+    if(!this.course.id) {
       this.activatedRoute.paramMap
         .subscribe(paramMap => {
           let id = paramMap.get('id');
@@ -32,17 +40,17 @@ export class CourseInfoComponent implements OnInit {
     this.coursesService.getCourse(id)
       .subscribe(response => {
         this.course = response;
+        this.getAuthorsName(response.authors);
       });
   }
 
-  getAuthorsName(authorId: string): string {
-    let authorName = '';
-    this.coursesService.getAuthorById(authorId)
-      .subscribe(response => {
-        authorName = response.name;
-      });
-
-    return authorName;
+  getAuthorsName(authorsIds: string[]) {
+    authorsIds.forEach(authorId => {
+      this.coursesService.getAuthorById(authorId)
+        .subscribe(response => {
+          this.authorsNames.push(response.name);
+        });
+    });
   }
 
   backCourseClick(event?: MouseEvent) {

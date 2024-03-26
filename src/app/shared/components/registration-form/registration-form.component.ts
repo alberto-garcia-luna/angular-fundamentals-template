@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/auth/services/auth.service';
 import { EmailValidatorDirective } from '@app/shared/directives/email.directive';
 
 @Component({
@@ -10,7 +11,7 @@ import { EmailValidatorDirective } from '@app/shared/directives/email.directive'
 })
 export class RegistrationFormComponent implements OnInit {
   registrationForm!: FormGroup;
-  registrationButtonText: string = 'Login'
+  registrationButtonText: string = 'Register'
   submitted: boolean = false;
   
   // Use the names `name`, `email`, `password` for the form controls.  
@@ -19,7 +20,8 @@ export class RegistrationFormComponent implements OnInit {
   password!: FormControl;
 
   constructor(private router: Router,
-    private fb: FormBuilder) {}
+    private fb: FormBuilder,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.createRegistrationForm();
@@ -31,7 +33,14 @@ export class RegistrationFormComponent implements OnInit {
       return;
 
     console.log(registrationItem);
-    this.router.navigate(['/coruses']);
+    
+    this.authService.register({
+      name: this.name.value,
+      password: this.password.value,
+      email: this.email.value
+    }).subscribe(() => {
+      this.router.navigate(['/coruses']);
+    });    
   }
 
   createRegistrationForm(){

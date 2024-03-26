@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/auth/services/auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -13,10 +14,9 @@ export class LoginFormComponent {
   loginButtonText: string = 'Login';
   submitted: boolean = false;
 
-  email: FormControl = new FormControl('');
-  password: FormControl = new FormControl('');
-
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private authService: AuthService) {
+  }
 
   submitButtonClick(event: Event) {
     if (this.loginForm.invalid)
@@ -27,6 +27,13 @@ export class LoginFormComponent {
 
   onSubmit(loginItem: any) {
     console.log(loginItem);
-    this.router.navigate(['/coruses']);
+
+    this.authService.login({
+      email: this.loginForm.controls['email'].value,
+      password: this.loginForm.controls['password'].value,
+      name: ''
+    }).subscribe(() => {
+      this.router.navigate(['/coruses']);
+    });    
   }
 }

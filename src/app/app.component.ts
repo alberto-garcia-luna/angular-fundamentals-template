@@ -1,52 +1,91 @@
-import { Component } from '@angular/core';
-import { mockedCoursesList, mockedUser } from './shared/mocks/mock';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { mockedCoursesList } from './shared/mocks/mock';
+import { AuthService, User } from './auth/services/auth.service';
+import { UserService } from './user/services/user.service';
+import { SessionStorageService } from './auth/services/session-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'courses-app';
 
-  loginButtonText: string = 'Login';
-  logoutButtonText: string = 'Logout';
   emptyCourseListTitle: string = 'Your List Is Empty';
   emptyCourseListText: string = 'Please use \'Add New Course\' button to add your first course';
   addNewCourseButtonText: string = "Add New Course";
   showCourseButtonText: string = "Show Course";
-  defaultUsername: string = 'Harry Potter';
   editButtonIconName: string = 'edit';
   deleteButtonIconName: string = 'delete';
 
-  headerButtonText: string = '';
+  headerButtonText: string = 'Login';
   infoTitle: string = '';
   infoText: string = '';
   infoButtonText: string = '';
 
-  testUser = mockedUser;  
+  user: User = this.getEmptyUser();
   testCourse = mockedCoursesList[0];
 
-  ngOnInit() {
-    this.headerButtonText = this.getHeaderButtonText();
+  constructor(private authService: AuthService, 
+    private userService: UserService,
+    private sessionStorageService: SessionStorageService,
+    private router: Router) {}
+
+  ngOnInit(): void {
     this.infoTitle = this.emptyCourseListTitle;
     this.infoText = this.emptyCourseListText;
     this.infoButtonText = this.addNewCourseButtonText;
   }
 
-  getHeaderButtonText(): string{
-    return mockedUser.hasSession ? this.logoutButtonText : this.loginButtonText;
+  loadHeader() {
+    if (this.authService.isAuthorised) {
+      this.userService.getUser()
+        .subscribe(response => {
+          this.user = response;
+          this.headerButtonText = this.getHeaderButtonText();
+        });
+    }    
   }
 
-  loginClick(event?: MouseEvent) {
+  getHeaderButtonText(): string{
+    return this.authService.isAuthorised ? 'Logout' : 'Login';
+  }
+
+  logoutClick(event?: MouseEvent) {
     console.log(this.headerButtonText + " button event");
     
-    mockedUser.hasSession = !mockedUser.hasSession;
-    mockedUser.username = mockedUser.hasSession ? this.defaultUsername : '';
-    this.headerButtonText = this.getHeaderButtonText();
+    if (!this.authService.isAuthorised){
+      this.router.navigate(['/login']);
+    }
+
+    this.authService.logout(this.getSessionToken())
+      .subscribe(() => {
+        this.headerButtonText = this.getHeaderButtonText();
+        this.user = this.getEmptyUser();
+        this.router.navigate(['/login']);
+      });
   }
 
   addNewCourseClick(event?: MouseEvent) {
     console.log('Add New Course button event');
+  }
+
+  getEmptyUser(): User {
+    return {
+      name: '',
+      email: '',
+      password: ''
+    };
+  }
+
+  getSessionToken(): string{
+    const token = this.sessionStorageService.getToken();
+    if (token) {
+      return token.replace('Bearer ', '');
+    }
+
+    return '';
   }
 }

@@ -20,8 +20,8 @@
     </div>
     <div>
       <b>Authors: </b>
-      <span *ngFor="let author of course.authors; let isLast = last" class="course-info__info-authors">
-        {{getAuthorsName(author)}}{{isLast ? '' : ', '}}
+      <span *ngFor="let authorName of authorsNames; let isLast = last" class="course-info__info-authors">
+        {{authorName}}{{isLast ? '' : ', '}}
       </span>
     </div>
   </div>
