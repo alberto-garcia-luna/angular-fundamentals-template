@@ -13,7 +13,8 @@ const routes: Routes = [
     { 
         path: 'courses/edit/:id', 
         component: CourseFormComponent,
-        canActivate: [AuthorizedGuard] },
+        canActivate: [AuthorizedGuard] 
+    },
 ];
 
 export const sharedRouting = RouterModule.forChild(routes);
