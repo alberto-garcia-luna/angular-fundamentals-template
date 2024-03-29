@@ -4,7 +4,8 @@ import {
   FormGroup, ValidationErrors, ValidatorFn, Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Author, Course, CoursesService } from '@app/services/courses.service';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Author, Course } from '@app/services/courses.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,8 +26,10 @@ export class CourseFormComponent implements OnInit {
   authorsList!: FormArray;
   authors!: FormArray;
 
+  isEdit: boolean = false;
+
   constructor(public fb: FormBuilder, public library: FaIconLibrary,    
-    private coursesService: CoursesService, private router: Router,
+    private coursesStoreService: CoursesStoreService, private router: Router,
     private activatedRoute: ActivatedRoute) {
 
     library.addIconPacks(fas);
@@ -35,18 +38,21 @@ export class CourseFormComponent implements OnInit {
   
   submitted: boolean = false;
   addAuthorButtonText: string = 'Create Author';
-  addCourseButtonText: string = 'Create Course';
+  addCourseButtonText!: string;
   cancelButtonText: string = 'Cancel';
   deleteButtonIconName: string = 'delete';
   addButtonIconName: string = 'add';
 
   ngOnInit(): void {
+    this.addCourseButtonText = 'Create Course';
     this.getAuthorsList();
 
     this.activatedRoute.paramMap
       .subscribe(paramMap => {
         let id = paramMap.get('id');
         if (id) {
+          this.isEdit = true;
+          this.addCourseButtonText = 'Edit Course';
           this.getCourse(id);
         }
       });  
@@ -63,7 +69,7 @@ export class CourseFormComponent implements OnInit {
     ]));
     this.duration = this.fb.control(0, Validators.compose([
       Validators.required,
-      Validators.min(0)
+      Validators.min(1)
     ]));
     this.author = this.fb.control('', Validators.compose([
       Validators.minLength(2),
@@ -94,21 +100,22 @@ export class CourseFormComponent implements OnInit {
 
     console.log(course);
 
-    this.coursesService.createCourse(course)
-      .subscribe(() => {
-        this.router.navigate(['/courses']);
-      });
+    this.coursesStoreService.createCourse(course)
+      .subscribe(() => this.router.navigate(['/courses']));
   }
 
   getCourse(id: string) {
-    this.coursesService.getCourse(id)
-      .subscribe(response => {
-        this.title.setValue(response.title);
-        this.description.setValue(response.description);
-        this.duration.setValue(response.duration);
-        this.description.setValue(response.description);
-        response.authors.forEach(courseAuthorId => {
-          this.authors.clear();
+    this.coursesStoreService.getCourse(id)
+      .subscribe((courses) => {
+        if (courses.length == 0)
+          return;
+
+        this.title.setValue(courses[0].title);
+        this.description.setValue(courses[0].description);
+        this.duration.setValue(courses[0].duration);
+        this.description.setValue(courses[0].description);
+        this.authors.clear();
+        courses[0].authors.forEach(courseAuthorId => {
           let authorInList = this.authorsList.value.find(
             (item: Author) => item.id === courseAuthorId
           );
@@ -127,7 +134,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   getAuthorsList() {
-    this.coursesService.getAllAuthors()
+    this.coursesStoreService.getAllAuthors()
       .subscribe(response => {
         this.populateAuthorsArray(response);        
       });
@@ -147,13 +154,13 @@ export class CourseFormComponent implements OnInit {
     if (!authorName || this.author.invalid)
       return;
     
-    this.coursesService.createAuthor(authorName)
+    this.coursesStoreService.createAuthor(authorName)
       .subscribe(() => {
         this.author.reset();
         this.getAuthorsList();
     
         console.log('Author created: ' + authorName);
-      });    
+      });
   }
 
   deleteAuthor(authorIndex: number) {
@@ -215,7 +222,7 @@ export function forbiddenAuthorName(regExp: RegExp): ValidatorFn  {
 
       const validAuthor = regExp.test(control.value);
       return !validAuthor 
-          ? {authorValidator: { value: control.value }} 
+          ? { authorValidator: { value: control.value } } 
           : null;
     };
 }

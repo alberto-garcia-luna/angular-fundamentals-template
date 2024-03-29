@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Course, CoursesService } from '@app/services/courses.service';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Course } from '@app/services/courses.service';
 
 @Component({
   selector: 'app-course-list',
@@ -8,7 +9,7 @@ import { Course, CoursesService } from '@app/services/courses.service';
   styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent {
-  @Input() courses: Course[] = [];
+  @Input() courses: Course[] | null = [];
   @Input() editable: boolean = false;
 
   @Output() showCourse = new EventEmitter();
@@ -19,23 +20,21 @@ export class CourseListComponent {
   editButtonName: string = 'edit';
   deleteButtonName: string = 'delete';
 
-  constructor(private coursesService: CoursesService,
-    private router: Router) {}
+  constructor(private router: Router,
+    private coursesStoreService: CoursesStoreService) {}
 
   showCourseButtonClick(id: string) {
     this.showCourse.emit();
     this.router.navigate([`courses/${id}`]);
   }
   
-  editCourseButtonClick(id: string) {    
+  editCourseButtonClick(id: string) {
     this.editCourse.emit();
     this.router.navigate([`courses/edit/${id}`]);
   }
   
   deleteCourseButtonClick(id: string) {
-    this.coursesService.deleteCourse(id)
-      .subscribe(() => {
-        this.deleteCourse.emit();
-      });
+    this.coursesStoreService.deleteCourse(id)
+      .subscribe(() => this.deleteCourse.emit());
   }  
 }

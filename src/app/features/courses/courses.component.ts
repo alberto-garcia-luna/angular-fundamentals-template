@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Course, CoursesService } from '@app/services/courses.service';
+import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Course } from '@app/services/courses.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-courses',
@@ -9,19 +11,13 @@ import { Course, CoursesService } from '@app/services/courses.service';
 export class CoursesComponent implements OnInit {
   searchPlaceholderText: string = 'Enter your search query';
   createCourseButtonText: string = 'Create Course';
-  courses!: Course[];
+  courses!: Observable<Course[]>;
 
-  constructor(private coursesService: CoursesService) {}
+  constructor(private coursesStoreService: CoursesStoreService) {}
 
   ngOnInit(): void {
-    this.getAllCourses();
-  }
-
-  getAllCourses() {
-    this.coursesService.getAll()
-      .subscribe(response => {
-        this.courses = response;
-      });
+    this.courses = this.coursesStoreService.courses$;
+    this.coursesStoreService.getAll();
   }
 
   searchClick(event?: MouseEvent) {
@@ -38,6 +34,5 @@ export class CoursesComponent implements OnInit {
 
   deleteCourseClick(event?: MouseEvent) {
     console.log('Delete Course button event');
-    this.getAllCourses();
   }
 }

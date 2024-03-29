@@ -7,18 +7,18 @@ const routes: Routes = [
     { 
         path: 'courses', 
         component: CoursesComponent, 
-        canActivate: [AuthorizedGuard] 
+        //canActivate: [AuthorizedGuard] 
     },
     { 
         path: 'courses/:id', 
         component: CourseInfoComponent, 
-        canActivate: [AuthorizedGuard] 
+        //canActivate: [AuthorizedGuard] 
     },
     { 
         path: '', 
         component: CoursesComponent, 
         pathMatch: 'full', 
-        canActivate: [AuthorizedGuard] 
+        //canActivate: [AuthorizedGuard] 
     }
 ];
 

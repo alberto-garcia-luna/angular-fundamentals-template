@@ -9,7 +9,9 @@ const AuthApiUrl: string = 'http://localhost:4000';
     providedIn: 'root'
 })
 export class AuthService {
-    isAuthorized$$ = new BehaviorSubject<boolean>(false);
+    private isAuthorized$$ = new BehaviorSubject<boolean>(false);
+    isAuthorized$ = this.isAuthorized$$.asObservable();
+
     constructor(private http: HttpClient,
         private sessionStorageService: SessionStorageService) {}
     
@@ -39,13 +41,13 @@ export class AuthService {
     }
 
     get isAuthorised(): boolean {
-        // Add your code here. Get isAuthorized$$ value
+        // Add your code here. Get isAuthorized$$ value        
         return this.isAuthorized$$.getValue();
     }
 
     set isAuthorised(value: boolean) {
         // Add your code here. Change isAuthorized$$ value
-        this.isAuthorized$$.next(value);
+        this.isAuthorized$$.next(value);        
     }
 
     getLoginUrl(): string {

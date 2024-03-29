@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { map } from 'rxjs';
 
 const CoursesApiUrl: string = 'http://localhost:4000/Courses';
 const AuthorsApiUrl: string = 'http://localhost:4000/Authors';
@@ -11,7 +11,7 @@ const AuthorsApiUrl: string = 'http://localhost:4000/Authors';
 export class CoursesService {
     constructor(private http: HttpClient) {}
 
-    getAll(): Observable<Course[]> {
+    getAll() {
         return this.http.get<CoursesResponse>(`${CoursesApiUrl}/all`)
             .pipe(map(response => { 
                 return response.result; 
@@ -28,7 +28,7 @@ export class CoursesService {
         return this.http.put(`${CoursesApiUrl}/${id}`, course);
     }
 
-    getCourse(id: string): Observable<Course> {
+    getCourse(id: string) {
         // Add your code here
         return this.http.get<CourseResponse>(`${CoursesApiUrl}/${id}`)
             .pipe(map(response => { return response.result; }));
@@ -38,7 +38,7 @@ export class CoursesService {
         return this.http.delete(`${CoursesApiUrl}/${id}`);
     }
 
-    filterCourses(value?: string): Observable<Course[]> {
+    filterCourses(value?: string) {
         let getOptions = {};
         if (value) {
             getOptions = {
@@ -50,20 +50,18 @@ export class CoursesService {
             .pipe(map(response => { return response.result; }));
     }
 
-    getAllAuthors(): Observable<Author[]> {
+    getAllAuthors() {
         // Add your code here
         return this.http.get<AuthorsResponse>(`${AuthorsApiUrl}/all`)
             .pipe(map(response => { return response.result; }));
     }
 
-    createAuthor(name: string) {
+    createAuthor(authorName: string) {
         // Add your code here
-        return this.http.post(`${AuthorsApiUrl}/add`, {
-            name: name
-        });
+        return this.http.post(`${AuthorsApiUrl}/add`, {});
     }
 
-    getAuthorById(id: string): Observable<Author> {
+    getAuthorById(id: string) {
         // Add your code here
         return this.http.get<AuthorResponse>(`${AuthorsApiUrl}/${id}`)
             .pipe(map(response => { return response.result; }));
