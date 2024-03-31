@@ -4,8 +4,8 @@ import {
   FormGroup, ValidationErrors, ValidatorFn, Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Author, Course } from '@app/models/models';
 import { CoursesStoreService } from '@app/services/courses-store.service';
-import { Author, Course } from '@app/services/courses.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
@@ -157,15 +157,23 @@ export class CourseFormComponent implements OnInit {
     this.coursesStoreService.createAuthor(authorName)
       .subscribe(() => {
         this.author.reset();
-        this.getAuthorsList();
     
         console.log('Author created: ' + authorName);
       });
   }
 
-  deleteAuthor(authorIndex: number) {
-    this.authorsList.removeAt(authorIndex);
-    console.log('Author deleted');
+  deleteAuthor(authorId: string) {
+    this.coursesStoreService.deleteAuthor(authorId)
+      .subscribe(() => {
+        let authorInListIndex = this.authorsList.value.findIndex(
+          (item: Author) => item.id === authorId
+        );
+        if (authorInListIndex > -1)
+        {
+          this.authorsList.removeAt(authorInListIndex);
+        }
+        console.log('Author deleted');
+      });
   }
 
   addAuthor(authorItem: Author) {
@@ -180,7 +188,7 @@ export class CourseFormComponent implements OnInit {
     {
       this.authorsList.removeAt(authorIndex);
 
-      this.authors.push(new FormControl({
+      this.authors.push(this.fb.control({
         id: authorItem.id,
         name: authorItem.name
       }));

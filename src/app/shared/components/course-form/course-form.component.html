@@ -67,11 +67,11 @@
         <h4>Authors</h4>
         <div class="course__authors">
           <!--Use the name `authors` for the form array.-->
-          <ng-container *ngFor="let authorItem of authorsList.controls; let authorIndex = index">
+          <ng-container *ngFor="let authorItem of authorsList.controls">
             <div class="course__authors-item">
               <p>{{authorItem.value.name}}</p>
             </div>
-            <app-button [iconName]="deleteButtonIconName" (click)="deleteAuthor(authorIndex)"></app-button>
+            <app-button [iconName]="deleteButtonIconName" (click)="deleteAuthor(authorItem.value.id)"></app-button>
             <app-button [iconName]="addButtonIconName" (click)="addAuthor(authorItem.value)"></app-button>
           </ng-container>
         </div>

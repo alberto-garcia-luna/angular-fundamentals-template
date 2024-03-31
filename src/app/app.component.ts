@@ -1,9 +1,8 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { mockedCoursesList } from './shared/mocks/mock';
-import { AuthService, User } from './auth/services/auth.service';
-import { UserService } from './user/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth/services/auth.service';
 import { SessionStorageService } from './auth/services/session-storage.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,71 +12,41 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'courses-app';
 
-  emptyCourseListTitle: string = 'Your List Is Empty';
-  emptyCourseListText: string = 'Please use \'Add New Course\' button to add your first course';
-  addNewCourseButtonText: string = "Add New Course";
   showCourseButtonText: string = "Show Course";
   editButtonIconName: string = 'edit';
   deleteButtonIconName: string = 'delete';
 
-  headerButtonText: string = 'Login';
-  infoTitle: string = '';
-  infoText: string = '';
-  infoButtonText: string = '';
-
-  user: User = this.getEmptyUser();
-  testCourse = mockedCoursesList[0];
+  infoTitle: string = 'Your List Is Empty';
+  infoText: string = 'Please use \'Add New Course\' button to add your first course';
+  infoButtonText: string = 'Add New Course';
+  
+  username!: Observable<string>;
+  isAdmin!: Observable<boolean>;
 
   constructor(private authService: AuthService, 
-    private userService: UserService,
     private sessionStorageService: SessionStorageService,
     private router: Router) {}
 
   ngOnInit(): void {
-    this.infoTitle = this.emptyCourseListTitle;
-    this.infoText = this.emptyCourseListText;
-    this.infoButtonText = this.addNewCourseButtonText;
+    this.username = this.authService.name$;
+    this.isAdmin = this.authService.isAdmin$;
   }
 
-  loadHeader() {
-    if (this.authService.isAuthorised) {
-      this.userService.getUser()
-        .subscribe(response => {
-          this.user = response;
-          this.headerButtonText = this.getHeaderButtonText();
-        });
-    }    
+  logoutClick(event?: MouseEvent) {
+    console.log(this.getHeaderButtonText() + " button event");
+    
+    if (!this.authService.isAuthorised) {
+      this.router.navigate(['/login']);
+    } else {
+      this.authService.logout(this.getSessionToken())
+        .subscribe(() => { 
+          this.router.navigate(['/login'])
+      });
+    }
   }
 
   getHeaderButtonText(): string{
     return this.authService.isAuthorised ? 'Logout' : 'Login';
-  }
-
-  logoutClick(event?: MouseEvent) {
-    console.log(this.headerButtonText + " button event");
-    
-    if (!this.authService.isAuthorised){
-      this.router.navigate(['/login']);
-    }
-
-    this.authService.logout(this.getSessionToken())
-      .subscribe(() => {
-        this.headerButtonText = this.getHeaderButtonText();
-        this.user = this.getEmptyUser();
-        this.router.navigate(['/login']);
-      });
-  }
-
-  addNewCourseClick(event?: MouseEvent) {
-    console.log('Add New Course button event');
-  }
-
-  getEmptyUser(): User {
-    return {
-      name: '',
-      email: '',
-      password: ''
-    };
   }
 
   getSessionToken(): string{

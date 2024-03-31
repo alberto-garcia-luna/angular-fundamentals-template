@@ -1,12 +1,21 @@
 <!-- Search component -->
 <app-search [placeholder]="searchPlaceholderText" (search)="searchClick($event)"></app-search>
 
-<!-- Course list component -->
-<app-course-list [editable]="true" [courses]="(courses | async)"
-    (showCourse)="showCourseClick($event)" (deleteCourse)="deleteCourseClick($event)" 
-    (editCourse)="editCourseClick($event)">
-</app-course-list>
+<ng-template [ngIf]="(courses | async)!.length === 0">
+    <!-- Info component -->
+    <app-info [title]="infoTitle" [text]="infoText">
+        <app-button [buttonText]="infoButtonText" (click)="addNewCourseClick($event)"></app-button>
+    </app-info>    
+</ng-template>
 
-<div class="course_create_section">
-    <app-button [buttonText]="createCourseButtonText" routerLink="/courses/add"></app-button>
-</div>
+<ng-template [ngIf]="(courses | async)!.length > 0">
+    <!-- Course list component -->
+    <app-course-list [editable]="(isEditable | async) || false" [courses]="(courses | async)"
+        (showCourse)="showCourseClick($event)" (deleteCourse)="deleteCourseClick($event)" 
+        (editCourse)="editCourseClick($event)">
+    </app-course-list>
+
+    <div class="course_create_section">
+        <app-button [buttonText]="createCourseButtonText" routerLink="/courses/add"></app-button>
+    </div>    
+</ng-template>

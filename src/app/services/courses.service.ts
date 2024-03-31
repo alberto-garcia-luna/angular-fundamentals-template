@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { AuthorResponse, AuthorsResponse, Course, CourseResponse, CoursesResponse } from '@app/models/models';
 
 const CoursesApiUrl: string = 'http://localhost:4000/Courses';
 const AuthorsApiUrl: string = 'http://localhost:4000/Authors';
@@ -39,14 +40,7 @@ export class CoursesService {
     }
 
     filterCourses(value?: string) {
-        let getOptions = {};
-        if (value) {
-            getOptions = {
-                name: { title: value }
-            }
-        }
-
-        return this.http.get<CoursesResponse>(`${CoursesApiUrl}/filter`, getOptions)
+        return this.http.get<CoursesResponse>(`${CoursesApiUrl}/filter?title=${value}`)
             .pipe(map(response => { return response.result; }));
     }
 
@@ -58,7 +52,7 @@ export class CoursesService {
 
     createAuthor(authorName: string) {
         // Add your code here
-        return this.http.post(`${AuthorsApiUrl}/add`, {});
+        return this.http.post(`${AuthorsApiUrl}/add`, { name: authorName });
     }
 
     getAuthorById(id: string) {
@@ -70,38 +64,4 @@ export class CoursesService {
     deleteAuthor(id: string) {
         return this.http.delete(`${AuthorsApiUrl}/${id}`);
     }
-}
-
-export interface CoursesResponse {
-    successful: boolean;
-    result: Course[];
-}
-
-export interface CourseResponse {
-    successful: boolean;
-    result: Course;
-}
-
-export interface Course {
-    id: string;
-    title: string;
-    description: string;
-    creationDate: string | Date;
-    duration: number;
-    authors: string[];
-}
-
-export interface AuthorsResponse {
-    successful: boolean;
-    result: Author[];
-}
-
-export interface AuthorResponse {
-    successful: boolean;
-    result: Author;
-}
-
-export interface Author {
-    id: string;
-    name: string;
 }

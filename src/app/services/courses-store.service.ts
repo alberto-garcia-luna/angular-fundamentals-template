@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Author, Course, CoursesService } from './courses.service';
+import { CoursesService } from './courses.service';
+import { Author, Course } from '@app/models/models';
 
 @Injectable({
     providedIn: 'root'
@@ -87,6 +88,17 @@ export class CoursesStoreService {
 
     filterCourses(value: string) {
         // Add your code here
+        this.isLoading$$.next(true);
+        this.coursesService.filterCourses(value)
+            .subscribe({
+                next: (response) => {
+                    this.courses$$.next(response);
+                },
+                error: (err) => { this.courses$$.error(err) },
+                complete: () => { this.isLoading$$.next(false); }
+        });
+
+        return this.courses$;        
     }
 
     getAllAuthors() {
@@ -125,6 +137,19 @@ export class CoursesStoreService {
                 next: (response) => {
                     this.authors$$.next([response]);
                 },
+                error: (err) => { this.authors$$.error(err) },
+                complete: () => { this.isLoading$$.next(false); }
+        });
+        
+        return this.authors$;
+    }
+
+    deleteAuthor(id: string) {
+        // Add your code here        
+        this.isLoading$$.next(true);
+        this.coursesService.deleteAuthor(id)
+            .subscribe({
+                next: () => { this.getAllAuthors() },
                 error: (err) => { this.authors$$.error(err) },
                 complete: () => { this.isLoading$$.next(false); }
         });

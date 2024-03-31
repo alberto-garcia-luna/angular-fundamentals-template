@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthResponse, User } from '@app/auth/services/auth.service';
+import { User, UserResponse } from '@app/models/models';
 import { Observable, map } from 'rxjs';
 
 const UsersApiUrl: string = 'http://localhost:4000/Users';
@@ -18,9 +18,4 @@ export class UserService {
                 return response.result;
             }));
     }
-}
-
-export interface UserResponse {
-    successful: boolean;
-    result: User;
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Course } from '@app/services/courses.service';
+import { Course } from '@app/models/models';
 import { mockedAuthorsList } from '@app/shared/mocks/mock';
 
 @Component({

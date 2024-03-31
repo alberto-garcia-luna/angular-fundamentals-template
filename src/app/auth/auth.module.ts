@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     SessionStorageService,
-    AuthService,
+    AuthService    
   ]
 })
 export class AuthModule { }

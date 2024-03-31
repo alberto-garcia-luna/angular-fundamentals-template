@@ -1,13 +1,13 @@
 <app-header>
   <div class="app-header-right-panel">
     <div class="app-header-right-panel-username">
-      <p>{{user.name}}</p>
+      <p>{{username | async}}</p>
     </div>
-    <app-button [buttonText]="headerButtonText" (click)="logoutClick($event)"></app-button>
+    <app-button [buttonText]="getHeaderButtonText()" (click)="logoutClick($event)"></app-button>
   </div>
 </app-header>
 <div class="app-root">
-  <router-outlet (activate)="loadHeader()"></router-outlet>
+  <router-outlet></router-outlet>
 
   <!-- Courses component -->
   <!--
