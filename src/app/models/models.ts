@@ -34,6 +34,15 @@ export interface Course {
     authors: string[];
 }
 
+export interface CourseFormModel {
+    id: string;
+    title: string;
+    description: string;
+    creationDate: string | Date;
+    duration: number;
+    authors: Author[];
+}
+
 export interface AuthorsResponse {
     successful: boolean;
     result: Author[];

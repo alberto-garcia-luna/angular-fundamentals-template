@@ -4,7 +4,7 @@ import {
   FormGroup, ValidationErrors, ValidatorFn, Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Author, Course } from '@app/models/models';
+import { Author, CourseFormModel } from '@app/models/models';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -26,7 +26,7 @@ export class CourseFormComponent implements OnInit {
   authorsList!: FormArray;
   authors!: FormArray;
 
-  isEdit: boolean = false;
+  id: string = '';
 
   constructor(public fb: FormBuilder, public library: FaIconLibrary,    
     private coursesStoreService: CoursesStoreService, private router: Router,
@@ -51,7 +51,7 @@ export class CourseFormComponent implements OnInit {
       .subscribe(paramMap => {
         let id = paramMap.get('id');
         if (id) {
-          this.isEdit = true;
+          this.id = id;
           this.addCourseButtonText = 'Edit Course';
           this.getCourse(id);
         }
@@ -92,16 +92,26 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
-  onSubmit(course: Course) {
+  onSubmit(course: CourseFormModel) {
     this.submitted = true;
 
     if (!course || this.courseForm.invalid) 
       return;
 
     console.log(course);
+    let authorsInCourse: string[] = [];
+    course.authors.forEach(item => {
+      authorsInCourse.push(item.id);
+    })
 
-    this.coursesStoreService.createCourse(course)
-      .subscribe(() => this.router.navigate(['/courses']));
+    this.coursesStoreService.createCourse({
+      id: this.id,
+      creationDate: '',
+      title: course.title,
+      description: course.description,
+      duration: course.duration,
+      authors: authorsInCourse
+    }).subscribe(() => this.router.navigate(['/courses']));
   }
 
   getCourse(id: string) {
@@ -222,6 +232,7 @@ export class CourseFormComponent implements OnInit {
     console.log("Cancel button");
   }
 }
+
 export function forbiddenAuthorName(regExp: RegExp): ValidatorFn  {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) {

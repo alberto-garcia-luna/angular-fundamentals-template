@@ -5,6 +5,8 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { CoursesComponent } from './courses.component';
 import { coursesRouting } from './courses.routing';
 import { SharedModule } from '@app/shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import * as fromCourseReducer from '@app/store/courses/courses.reducer';
 
 const components = [
     CoursesComponent,
@@ -17,7 +19,11 @@ const components = [
     imports: [
         CommonModule,
         SharedModule,
-        coursesRouting
+        coursesRouting,
+        StoreModule.forFeature(
+            fromCourseReducer.coursesFeatureKey,
+            fromCourseReducer.reducer
+        )
     ],    
     exports: [components]
 })

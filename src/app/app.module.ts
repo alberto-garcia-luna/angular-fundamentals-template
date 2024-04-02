@@ -14,6 +14,7 @@ import { CoursesService } from '@app/services/courses.service';
 import { routing } from './app-routing.module';
 import { TokenInterceptor } from './auth/interceptors/token.interceptor';
 import { UserService } from './user/services/user.service';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserService } from './user/services/user.service';
     RouterModule,
     CoursesModule,
     HttpClientModule,
-    routing
+    routing,
+    StoreModule.forRoot({})
   ],
   exports: [RouterModule],
   providers: [

@@ -8,8 +8,8 @@
         <div class="course-card__info-text">
             <div>
               <b>Authors: </b>
-              <span *ngFor="let author of course.authors; let isLast = last">
-                {{getAuthorsName(author)}}{{isLast ? '' : ', '}}
+              <span *ngFor="let authorName of authorsNames; let isLast = last">
+                {{authorName}}{{isLast ? '' : ', '}}
               </span>
             </div>
             <div>
