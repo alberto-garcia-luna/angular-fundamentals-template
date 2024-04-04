@@ -14,25 +14,25 @@ export class CoursesService {
 
     getAll() {
         return this.http.get<CoursesResponse>(`${CoursesApiUrl}/all`)
-            .pipe(map(response => { 
-                return response.result; 
-            }));
+            .pipe(map(response => response.result ));
     }
 
     createCourse(course: Course) { // replace 'any' with the required interface
         // Add your code here
-        return this.http.post(`${CoursesApiUrl}/add`, course);
+        return this.http.post<CourseResponse>(`${CoursesApiUrl}/add`, course)
+            .pipe(map(response => response.result ));   
     }
 
     editCourse(id: string, course: Course) { // replace 'any' with the required interface
         // Add your code here
-        return this.http.put(`${CoursesApiUrl}/${id}`, course);
+        return this.http.put<CourseResponse>(`${CoursesApiUrl}/${id}`, course)
+            .pipe(map(response => response.result ));
     }
 
     getCourse(id: string) {
         // Add your code here
         return this.http.get<CourseResponse>(`${CoursesApiUrl}/${id}`)
-            .pipe(map(response => { return response.result; }));
+            .pipe(map(response => response.result ));
     }
 
     deleteCourse(id: string) {

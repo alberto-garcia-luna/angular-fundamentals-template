@@ -8,6 +8,7 @@ export const coursesFeatureKey = 'courses';
 export interface CoursesState {
     // Add your code here
     allCourses: Course[];
+    courses: Course[];
     course: Course;
     isAllCoursesLoading: boolean;
     isSingleCourseLoading: boolean;
@@ -18,6 +19,7 @@ export interface CoursesState {
 export const initialState: CoursesState = {
     // Add your code here
     allCourses: [],
+    courses: [],
     course: {
         id: '',
         title: '',
