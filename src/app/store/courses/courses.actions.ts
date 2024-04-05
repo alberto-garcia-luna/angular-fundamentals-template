@@ -33,30 +33,47 @@ export class RequestAllCourses implements Action {
 
 export class RequestSingleCourse implements Action {
     readonly type = CoursesConstants.REQUEST_SINGLE_COURSE;
+    readonly id: string | number;
 
-    constructor(id: string | number) {}
+    constructor(id: string | number) {
+        this.id = id;
+    }
 }
 
 export class RequestFilteredCourses implements Action {
     readonly type = CoursesConstants.REQUEST_FILTERED_COURSES;
+    readonly title: string;
 
-    constructor(searchValue: string) {}
+    constructor(searchValue: string) {
+        this.title = searchValue;
+    }
 }
 
 export class RequestEditCourse implements Action {
     readonly type = CoursesConstants.REQUEST_EDIT_COURSE;
+    readonly id: string | number;
+    readonly course: Course;
 
-    constructor(id: string | number, body: Course) {}
+    constructor(id: string | number, body: Course) {
+        this.id = id;
+        this.course = body;
+    }
 }
 
 export class RequestCreateCourse implements Action {
     readonly type = CoursesConstants.REQUEST_CREATE_COURSE;
+    readonly course: Course;
 
-    constructor(body: Course) {}
+    constructor(body: Course) {
+        this.course = body;
+    }
 }
 
 export class RequestDeleteCourse implements Action {
     readonly type = CoursesConstants.REQUEST_DELETE_COURSE;
+    readonly id: string | number;
 
-    constructor(id: string | number) {}
+    constructor(id: string | number) {
+        this.id = id;
+    }
 }
