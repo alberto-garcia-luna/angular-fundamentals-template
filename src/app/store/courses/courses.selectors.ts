@@ -26,7 +26,7 @@ export const getAllCourses = createSelector(
 
 export const getCourses = createSelector(
     getCourseState,
-    (state: CoursesState) => state.courses
+    (state: CoursesState) => state.allCourses
 );
 
 export const getCourse = createSelector(

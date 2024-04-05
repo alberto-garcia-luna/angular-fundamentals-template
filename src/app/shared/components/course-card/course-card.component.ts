@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Course } from '@app/models/models';
 import { CoursesService } from '@app/services/courses.service';
+import { Course } from '@app/store/courses/courses.reducer';
 
 @Component({
   selector: 'app-course-card',
@@ -20,7 +20,7 @@ export class CourseCardComponent implements OnInit {
   constructor(private coursesService: CoursesService) {}
 
   ngOnInit(): void {
-    this.course.authors.forEach(authorId => {
+    this.course.authors?.forEach(authorId => {
       this.coursesService.getAuthorById(authorId)
         .subscribe(response => {
           this.authorsNames.push(response.name);

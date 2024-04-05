@@ -6,7 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CustomDatePipe implements PipeTransform {
     // Add your code here
-    transform(value: string | number | Date, format?: string) {
+    transform(value: string | number | Date | undefined, format?: string) {
+        if (!value) { 
+            return;
+        }
+
         if (!format) {
             format = 'dd.M.yyyy'
         }

@@ -1,3 +1,5 @@
+import { Course } from "@app/store/courses/courses.reducer";
+
 export interface AuthResponse {
     successful: boolean;
     result: string;
@@ -23,15 +25,6 @@ export interface CoursesResponse {
 export interface CourseResponse {
     successful: boolean;
     result: Course;
-}
-
-export interface Course {
-    id: string;
-    title: string;
-    description: string;
-    creationDate: string | Date;
-    duration: number;
-    authors: string[];
 }
 
 export interface CourseFormModel {

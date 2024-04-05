@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CoursesService } from './courses.service';
-import { Author, Course } from '@app/models/models';
+import { Author } from '@app/models/models';
+import { Course } from '@app/store/courses/courses.reducer';
 
 @Injectable({
     providedIn: 'root'
@@ -73,7 +74,7 @@ export class CoursesStoreService {
         return this.courses$;
     }
 
-    deleteCourse(id: string) {
+    deleteCourse(id: string | number) {
         // Add your code here        
         this.isLoading$$.next(true);
         this.coursesService.deleteCourse(id)

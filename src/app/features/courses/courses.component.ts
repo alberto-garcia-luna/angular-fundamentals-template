@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/services/auth.service';
-import { Course } from '@app/models/models';
 import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Course } from '@app/store/courses/courses.reducer';
 import { Observable } from 'rxjs';
 
 @Component({

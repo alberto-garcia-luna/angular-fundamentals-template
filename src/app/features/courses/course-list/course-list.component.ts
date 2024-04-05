@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Course } from '@app/models/models';
 import { CoursesStoreService } from '@app/services/courses-store.service';
+import { Course } from '@app/store/courses/courses.reducer';
 
 @Component({
   selector: 'app-course-list',
@@ -23,17 +23,29 @@ export class CourseListComponent {
   constructor(private router: Router,
     private coursesStoreService: CoursesStoreService) {}
 
-  showCourseButtonClick(id: string) {
+  showCourseButtonClick(id: string | number | undefined) {
+    if (!id) {
+      return;
+    }
+
     this.showCourse.emit();
     this.router.navigate([`courses/${id}`]);
   }
   
-  editCourseButtonClick(id: string) {
+  editCourseButtonClick(id: string | number | undefined) {
+    if (!id) {
+      return;
+    }
+
     this.editCourse.emit();
     this.router.navigate([`courses/edit/${id}`]);
   }
   
-  deleteCourseButtonClick(id: string) {
+  deleteCourseButtonClick(id: string | number | undefined) {
+    if (!id) {
+      return;
+    }
+    
     this.coursesStoreService.deleteCourse(id)
       .subscribe(() => this.deleteCourse.emit());
   }  

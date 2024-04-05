@@ -125,7 +125,7 @@ export class CourseFormComponent implements OnInit {
         this.duration.setValue(courses[0].duration);
         this.description.setValue(courses[0].description);
         this.authors.clear();
-        courses[0].authors.forEach(courseAuthorId => {
+        courses[0].authors?.forEach(courseAuthorId => {
           let authorInList = this.authorsList.value.find(
             (item: Author) => item.id === courseAuthorId
           );

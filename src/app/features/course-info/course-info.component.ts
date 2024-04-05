@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Course } from '@app/models/models';
 import { CoursesService } from '@app/services/courses.service';
+import { Course } from '@app/store/courses/courses.reducer';
 
 @Component({
   selector: 'app-course-info',
@@ -45,8 +45,8 @@ export class CourseInfoComponent implements OnInit {
       });
   }
 
-  getAuthorsName(authorsIds: string[]) {
-    authorsIds.forEach(authorId => {
+  getAuthorsName(authorsIds: string[] | undefined) {
+    authorsIds?.forEach(authorId => {
       this.coursesService.getAuthorById(authorId)
         .subscribe(response => {
           this.authorsNames.push(response.name);
